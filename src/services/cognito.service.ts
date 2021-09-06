@@ -3,11 +3,11 @@ import crypto from 'crypto'
 
 export default class Cognito {
   private config = {
-    apiVersion: '2016-04-18',
-    region: 'us-east-2',
+    apiVersion: '',
+    region: '',
   }
-  private secretHash = '1ba5hoadk8eb91b4fj072dkn5q0c7p3osa946socp6pvmp7qhh9d'
-  private clientId = '7bdvubmre22p6j95lpa85p1ua1';
+  private secretHash = ''
+  private clientId = '';
 
   private cognitoIdentity;
 
