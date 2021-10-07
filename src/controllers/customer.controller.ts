@@ -1,6 +1,7 @@
 import * as express from 'express'
 import { Request, Response } from 'express'
 import { body, header, validationResult } from 'express-validator';
+import DB_Customer from '../services/customer.service';
 
 class CustomerController {
     public path = '/customer'
@@ -25,21 +26,12 @@ class CustomerController {
       if (!result.isEmpty()) {
         return res.status(422).json({ errors: result.array() });
       }
-      console.log(req.body)
       
-      const { firstname, lastname, address, tel, gender, email, dob } = req.body;
-      let userAttr = [];
-      userAttr.push({ Name: 'email', Value: email});
-      userAttr.push({ Name: 'gender', Value: gender});
-      userAttr.push({ Name: 'dob', Value: dob.toString()});
-      userAttr.push({ Name: 'firstname', Value: firstname});
-      userAttr.push({ Name: 'lastname', Value: lastname});
-      userAttr.push({ Name: 'address', Value: address});
-      userAttr.push({ Name: 'tel', Value: tel});
-      userAttr.push({ Name: 'tel', Value: tel});
-
-      console.log('create request payload', userAttr);
-
+      const { username, firstname, lastname, address, tel, gender, email, dob } = req.body;
+      let userAttr =  { username, firstname, lastname, address, tel, gender, email, dob }
+      
+      new DB_Customer().addCustomer(userAttr, res);
+     
     }
 
 
@@ -51,12 +43,12 @@ class CustomerController {
       }
       console.log(req.body)
       
-      const { custid } = req.body;
-      let userAttr = [];
-      userAttr.push({ Name: 'custid', Value: custid});
-
-      console.log('delete request payload', userAttr);
-
+      const { id } = req.body;
+           
+      let userAttr =  { id }
+      
+      new DB_Customer().deleteCustomer(userAttr, res);
+     
     }
 
     // view new customer
@@ -67,18 +59,12 @@ class CustomerController {
       }
       console.log(req.body)
       
-      const { custid,firstname, lastname,  tel, gender, email } = req.body;
-      let userAttr = [];
-      userAttr.push({ Name: 'custid', Value: custid});
-
-      userAttr.push({ Name: 'email', Value: email});
-      userAttr.push({ Name: 'gender', Value: gender});
-      userAttr.push({ Name: 'firstname', Value: firstname});
-      userAttr.push({ Name: 'lastname', Value: lastname});
-      userAttr.push({ Name: 'tel', Value: tel});
-
-      console.log('delete request payload', userAttr);
-
+      const { id } = req.body;
+           
+      let userAttr =  { id }
+      
+      new DB_Customer().getCustomer(userAttr, res);
+     
     }
 
     
@@ -88,6 +74,7 @@ class CustomerController {
       if (!result.isEmpty()) {
         return res.status(422).json({ errors: result.array() });
       }
+      /*
       console.log(req.body)
       //@ts-ignore
       console.log(req.files.foo); 
@@ -108,42 +95,42 @@ class CustomerController {
         res.send('File uploaded!');
       });
 
-
-      const { custid, description } = req.body;
-      let userAttr = [];
-      userAttr.push({ Name: 'custid', Value: custid});
-
-      userAttr.push({ Name: 'description', Value: description});
-
-      console.log('delete request payload', userAttr);
-
+*/
+      const { custid, description, filenumber='1234' } = req.body;
+      let userAttr =  { custid, description, filenumber }
+     
+      console.log('upload request payload', userAttr);
+      new DB_Customer().uploadDocument(userAttr, res);
+     
     }
 
     private validateBody(type: string) {
       switch (type) {
         case 'create':
           return [
+            body('username').notEmpty().isLength({min: 1}),
             body('firstname').not().isEmpty().withMessage('First name is required'),
             body('lastname').not().isEmpty().withMessage('Last name is required'),
             body('address').optional({ checkFalsy: true, nullable: true }).isLength({ min: 10 }).withMessage('Please enter minimum 10 characters'),
             body('tel').isInt(),
             body('email').optional({ checkFalsy: true, nullable: true }).isEmail().withMessage('Please enter valid email'),
             body('gender').not().isEmpty().withMessage('Gender is required').isIn(['M', 'F']),
-            body('dob').toDate().optional({ checkFalsy: true }),
+            body('dob').isString().optional({ checkFalsy: true }),
           ]
         case 'delete':
           return [
-            body('custid').notEmpty().isLength({min: 1}),
+            body('id').notEmpty().isLength({min: 1}),
             
           ]
         case 'view':
           return [
-            body('custid').isString().isLength({min: 1})
+            body('id').isString().isLength({min: 1})
           ]
         case 'upload':
           return [
             body('custid').isString().isLength({min: 1}),
-            body('description').isString().isLength({min: 1})
+            body('description').isString().isLength({min: 1}),
+            body('filenumber').isString().isLength({min: 1})
           ]
       }
     }

@@ -1,6 +1,7 @@
 import * as express from 'express'
 import { Request, Response } from 'express'
 import { body, header, validationResult } from 'express-validator';
+import DB_Customer from '../services/customer.service';
 
 class CheckInOutController {
     public path = '/check'
@@ -12,7 +13,7 @@ class CheckInOutController {
 
     public initRoutes() {
         this.router.post('/in', this.validateBody('inout'), this.checkin)
-        this.router.post('/out', this.validateBody('inout'), this.checkout)
+        this.router.post('/out', this.validateBody('out'), this.checkout)
         
 
       }
@@ -26,14 +27,12 @@ class CheckInOutController {
       }
       console.log(req.body)
       
-      const { custid, tel, email } = req.body;
-      let userAttr = [];
-      userAttr.push({ Name: 'custid', Value: custid});
-      userAttr.push({ Name: 'tel', Value: tel});
-      userAttr.push({ Name: 'email', Value: email});
-
+      
+      const { custid, computerno } = req.body;
+      let userAttr =  { custid, computerno };
+      
       console.log('checkin  customer', userAttr);
-
+      new DB_Customer().checkin(userAttr, res);
     }
 
 
@@ -45,14 +44,12 @@ class CheckInOutController {
     }
     console.log(req.body)
     
-    const { custid, tel, email } = req.body;
-    let userAttr = [];
-    userAttr.push({ Name: 'custid', Value: custid});
-    userAttr.push({ Name: 'tel', Value: tel});
-    userAttr.push({ Name: 'email', Value: email});
-
+    const { id } = req.body;
+    let userAttr =  { id };
+    
     console.log('checkout  customer', userAttr);
-
+    new DB_Customer().checkout(userAttr, res);
+    
   }
 
 
@@ -62,11 +59,15 @@ class CheckInOutController {
         case 'inout':
           return [
             body('custid').notEmpty().isLength({min: 1}),
-            body('tel').optional({ checkFalsy: true, nullable: true }).isInt(),
-            body('email').optional({ checkFalsy: true, nullable: true }).isEmail().withMessage('Please enter valid email'),
-
+            body('computerno').optional(),
+            
           ]
-       
+        case 'out':
+          return [
+            body('id').notEmpty().isLength({min: 1}),
+            
+            
+          ]
       }
     }
 }
