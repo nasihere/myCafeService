@@ -49,28 +49,28 @@ http://localhost:5000/customer/create
 ## delete a customer
 http://localhost:5000/customer/delete
 {
-    "id": "324534534"
+    "custid": "324534534"
 }
 
 
 ## view a customer
 http://localhost:5000/customer/view
 {
-    "id": "324534534"
+    "custid": "324534534"
 }
 
 
 ## check in a customer
 http://localhost:5000/check/in
 {
-    "id": "324534534",
+    "custid": "324534534",
    "tel": "3233004756",
     "email": "dani.sayed.us@gmail.com"
 }
 ## check out a customer
 http://localhost:5000/check/out
 {
-    "id": "324534534",
+    "custid": "324534534",
    "tel": "3233004756",
     "email": "dani.sayed.us@gmail.com"
 }

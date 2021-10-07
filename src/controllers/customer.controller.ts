@@ -51,9 +51,9 @@ class CustomerController {
       }
       console.log(req.body)
       
-      const { id } = req.body;
+      const { custid } = req.body;
       let userAttr = [];
-      userAttr.push({ Name: 'id', Value: id});
+      userAttr.push({ Name: 'custid', Value: custid});
 
       console.log('delete request payload', userAttr);
 
@@ -67,9 +67,9 @@ class CustomerController {
       }
       console.log(req.body)
       
-      const { id,firstname, lastname,  tel, gender, email } = req.body;
+      const { custid,firstname, lastname,  tel, gender, email } = req.body;
       let userAttr = [];
-      userAttr.push({ Name: 'id', Value: id});
+      userAttr.push({ Name: 'custid', Value: custid});
 
       userAttr.push({ Name: 'email', Value: email});
       userAttr.push({ Name: 'gender', Value: gender});
@@ -109,9 +109,9 @@ class CustomerController {
       });
 
 
-      const { id, description } = req.body;
+      const { custid, description } = req.body;
       let userAttr = [];
-      userAttr.push({ Name: 'id', Value: id});
+      userAttr.push({ Name: 'custid', Value: custid});
 
       userAttr.push({ Name: 'description', Value: description});
 
@@ -133,16 +133,16 @@ class CustomerController {
           ]
         case 'delete':
           return [
-            body('id').notEmpty().isLength({min: 1}),
+            body('custid').notEmpty().isLength({min: 1}),
             
           ]
         case 'view':
           return [
-            body('id').isString().isLength({min: 1})
+            body('custid').isString().isLength({min: 1})
           ]
         case 'upload':
           return [
-            body('id').isString().isLength({min: 1}),
+            body('custid').isString().isLength({min: 1}),
             body('description').isString().isLength({min: 1})
           ]
       }

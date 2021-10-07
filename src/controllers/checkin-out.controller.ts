@@ -26,9 +26,9 @@ class CheckInOutController {
       }
       console.log(req.body)
       
-      const { id, tel, email } = req.body;
+      const { custid, tel, email } = req.body;
       let userAttr = [];
-      userAttr.push({ Name: 'id', Value: id});
+      userAttr.push({ Name: 'custid', Value: custid});
       userAttr.push({ Name: 'tel', Value: tel});
       userAttr.push({ Name: 'email', Value: email});
 
@@ -45,9 +45,9 @@ class CheckInOutController {
     }
     console.log(req.body)
     
-    const { id, tel, email } = req.body;
+    const { custid, tel, email } = req.body;
     let userAttr = [];
-    userAttr.push({ Name: 'id', Value: id});
+    userAttr.push({ Name: 'custid', Value: custid});
     userAttr.push({ Name: 'tel', Value: tel});
     userAttr.push({ Name: 'email', Value: email});
 
@@ -61,7 +61,7 @@ class CheckInOutController {
        
         case 'inout':
           return [
-            body('id').notEmpty().isLength({min: 1}),
+            body('custid').notEmpty().isLength({min: 1}),
             body('tel').optional({ checkFalsy: true, nullable: true }).isInt(),
             body('email').optional({ checkFalsy: true, nullable: true }).isEmail().withMessage('Please enter valid email'),
 
