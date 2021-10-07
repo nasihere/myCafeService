@@ -14,6 +14,7 @@ class CustomerController {
         this.router.post('/create', this.validateBody('create'), this.create)
         this.router.post('/delete', this.validateBody('delete'), this.delete)
         this.router.post('/view', this.validateBody('view'), this.view)
+        this.router.post('/upload', this.validateBody('upload'), this.upload)
 
       }
 
@@ -80,6 +81,44 @@ class CustomerController {
 
     }
 
+    
+    // upload new customer
+    upload = (req: Request, res: Response) => {
+      const result = validationResult(req);
+      if (!result.isEmpty()) {
+        return res.status(422).json({ errors: result.array() });
+      }
+      console.log(req.body)
+      //@ts-ignore
+      console.log(req.files.foo); 
+      //@ts-ignore
+      if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+      }
+    
+      // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+       //@ts-ignore
+      let sampleFile = req.files.sampleFile;
+    
+      // Use the mv() method to place the file somewhere on your server
+      sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
+        if (err)
+          return res.status(500).send(err);
+    
+        res.send('File uploaded!');
+      });
+
+
+      const { id, description } = req.body;
+      let userAttr = [];
+      userAttr.push({ Name: 'id', Value: id});
+
+      userAttr.push({ Name: 'description', Value: description});
+
+      console.log('delete request payload', userAttr);
+
+    }
+
     private validateBody(type: string) {
       switch (type) {
         case 'create':
@@ -100,6 +139,11 @@ class CustomerController {
         case 'view':
           return [
             body('id').isString().isLength({min: 1})
+          ]
+        case 'upload':
+          return [
+            body('id').isString().isLength({min: 1}),
+            body('description').isString().isLength({min: 1})
           ]
       }
     }
