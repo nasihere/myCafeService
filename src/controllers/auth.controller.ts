@@ -18,6 +18,7 @@ class AuthController {
         this.router.post('/signin', this.validateBody('signIn'), this.signIn)
         this.router.post('/verify', this.validateBody('verify'), this.verify)
         this.router.post('/user', this.validateBody('user'), this.user)
+        this.router.post('/updateuser', [], this.updateUserDetails)
       }
 
 
@@ -48,10 +49,10 @@ class AuthController {
             new DB_Users().addUsers({
               username,
               email,
-              cell: name,
+              cellPhone: name,
               country,
               password,
-              organization: family_name
+              cafeName: family_name
             });
           }
           success ? res.status(200).end() : res.status(400).end()
@@ -66,9 +67,11 @@ class AuthController {
         return res.status(422).json({ errors: result.array() });
       }
       console.log(req.body);
-
+      
 
       const { username, password } = req.body;
+      // new DB_Users().getUsers({}, {username}, res);
+      // return true;
       let cognitoService = new Cognito();
       cognitoService.signInUser(username, password)
         .then(success => {
@@ -96,8 +99,18 @@ class AuthController {
       let cognitoService = new Cognito();
       cognitoService.confirmSignUp(username, code)
         .then(success => {
+          if (success) {
+            new DB_Users().emailVerified(req);
+          }
           success ? res.status(200).end() : res.status(400).end()
         })
+    }
+
+    // update user account 
+    updateUserDetails = (req: Request, res: Response) => {
+      
+      console.log(req.body)
+      new DB_Users().updateUser(req.body, res);
     }
 
     user = (req: Request, res: Response) => {

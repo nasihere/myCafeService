@@ -14,7 +14,7 @@ class AuthMiddleware {
   }
   public verifyToken(req: Request, resp: Response, next): void {
     console.log("Middleware", req.path)
-    const nonSecurePaths = ['/', '/auth/test', '/auth/signin', '/auth/signup','/auth/verify'];
+    const nonSecurePaths = ['/', '/auth/updateuser','/auth/test', '/auth/signin', '/auth/signup','/auth/verify'];
     console.log('test', nonSecurePaths.includes(req.path))
     if (nonSecurePaths.includes(req.path)) return next();
     
