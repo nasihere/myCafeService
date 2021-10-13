@@ -1,6 +1,7 @@
 import * as express from 'express'
 import { Request, Response } from 'express'
 import { body, header, validationResult } from 'express-validator';
+import DB_Users from '../services/user.service';
 import Cognito from '../services/cognito.service';
 
 class AuthController {
@@ -12,6 +13,7 @@ class AuthController {
     }
 
     public initRoutes() {
+        this.router.get('/test', this.test)
         this.router.post('/signup', this.validateBody('signUp'), this.signUp)
         this.router.post('/signin', this.validateBody('signIn'), this.signIn)
         this.router.post('/verify', this.validateBody('verify'), this.verify)
@@ -19,14 +21,18 @@ class AuthController {
       }
 
 
+    test = (req: Request, res: Response) => {
+      res.status(200).end('hello world') 
+    }
     // Signup new user
     signUp = (req: Request, res: Response) => {
+      console.log('controller', 'singup')
       const result = validationResult(req);
       if (!result.isEmpty()) {
         return res.status(422).json({ errors: result.array() });
       }
       console.log(req.body)
-      const { username, password, email, gender, birthdate, name, family_name } = req.body;
+      const { username, password, email, gender, birthdate, name, family_name, country } = req.body;
       let userAttr = [];
       userAttr.push({ Name: 'email', Value: email});
       userAttr.push({ Name: 'gender', Value: gender});
@@ -38,6 +44,16 @@ class AuthController {
       let cognitoService = new Cognito();
       cognitoService.signUpUser(username, password, userAttr)
         .then(success => {
+          if (success) {
+            new DB_Users().addUsers({
+              username,
+              email,
+              cell: name,
+              country,
+              password,
+              organization: family_name
+            });
+          }
           success ? res.status(200).end() : res.status(400).end()
         })
     }
@@ -56,7 +72,14 @@ class AuthController {
       let cognitoService = new Cognito();
       cognitoService.signInUser(username, password)
         .then(success => {
-          success ? res.status(200).send(success).end() : res.status(400).end()
+          if (success) {
+             new DB_Users().getUsers(success, {username}, res);
+            //  const data = success;
+             
+          }
+          else { 
+             res.status(400).end()
+          }
         })
     }
 

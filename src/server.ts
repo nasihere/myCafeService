@@ -8,7 +8,6 @@ import AuthMiddleware from './middleware/auth.middleware'
 import CheckInOutController from './controllers/checkin-out.controller'
 import fileUpload  from 'express-fileupload';
 
-
 const app = new App({
     port: 5000,
     controllers: [
@@ -17,6 +16,7 @@ const app = new App({
         new CheckInOutController()
     ],
     middleWares: [
+      
       // parse application/json
       // parse application/x-www-form-urlencoded
       fileUpload({

@@ -1,4 +1,6 @@
 import AWS from 'aws-sdk';
+import { myAwsConfig } from '../config';
+
 const config = {
     aws_table_name: 'mycafe-customer',
     aws_table_name2: 'mycafe-customer-doc',
@@ -6,11 +8,7 @@ const config = {
     aws_local_config: {
       //Provide details for local configuration
     },
-    aws_remote_config: {
-      accessKeyId: 'AKIA5QT6SAUASCKHYOPM',
-      secretAccessKey: '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',
-      region: 'us-east-2',
-    }
+    aws_remote_config: myAwsConfig
 }
 import uuidv1 from 'uuid/v1';
 class DB_Customer{

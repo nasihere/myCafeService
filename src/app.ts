@@ -1,5 +1,6 @@
 import express from 'express'
 import { Application } from 'express'
+import cors from 'cors';
 
 class App {
     public app: Application
@@ -7,6 +8,7 @@ class App {
 
     constructor(appInit: { port: number; middleWares: any; controllers: any; }) {
         this.app = express()
+      
         this.port = appInit.port
 
         this.middlewares(appInit.middleWares)
@@ -17,6 +19,12 @@ class App {
         middleWares.forEach(middleWare => {
             this.app.use(middleWare)
         })
+        //const allowedOrigins = ['http://localhost:4200'];
+
+        const options: cors.CorsOptions = {
+            origin: '*'
+        };
+        this.app.use(cors(options));
     }
 
     private routes(controllers: { forEach: (arg0: (controller: any) => void) => void; }) {
@@ -29,6 +37,9 @@ class App {
         this.app.listen(this.port, () => {
             console.log(`App listening on the http://localhost:${this.port}`)
         })
+        
+       
+        
     }
 }
 
