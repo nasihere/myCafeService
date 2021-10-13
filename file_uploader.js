@@ -4,6 +4,9 @@ const BUCKET_NAME = require('./config').BUCKET_NAME;
 
 const ID =   require('./config').accessKeyId
 const SECRET = require('./config').secretAccessKey;
+const { promisify } = require('util')
+
+const unlinkAsync = promisify(fs.unlink)
 
 const s3 = new AWS.S3({
     accessKeyId: ID,
@@ -53,10 +56,9 @@ var upload = multer({
         cb(undefined, true)
     }
 })
-app.post('/uploadfile', upload.single('uploadedImage'), (req, res, next) => {
+app.post('/uploadfile', upload.single('uploadedImage'),   (req, res, next) => {
     const file = req.file
-    console.log(req.body , 'body')
-    console.log(file, 'file')
+   
     if (!file) {
         const error = new Error('Please upload a file')
         error.httpStatusCode = 400
@@ -79,6 +81,7 @@ app.post('/uploadfile', upload.single('uploadedImage'), (req, res, next) => {
             throw err;
         }
         console.log(`File uploaded successfully. ${data.Location}`);
+         unlinkAsync(req.file.path)
         res.status(200).send({
             statusCode: 200,
             status: 'success',
