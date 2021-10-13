@@ -1,13 +1,13 @@
 import AWS from 'aws-sdk';
 import crypto from 'crypto'
-
+import { cognito, region } from '../config';
 export default class Cognito {
   private config = {
     apiVersion: '2016-04-18',
-    region: 'us-east-2',
+    region
   }
-  private secretHash = '1ba5hoadk8eb91b4fj072dkn5q0c7p3osa946socp6pvmp7qhh9d'
-  private clientId = '7bdvubmre22p6j95lpa85p1ua1';
+  clientId = cognito.clientId;
+  secretHash = cognito.secretHash;
   private cognitoIdentity;
 
   constructor(){

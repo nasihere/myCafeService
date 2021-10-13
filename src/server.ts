@@ -7,7 +7,10 @@ import CustomerController from './controllers/customer.controller'
 import AuthMiddleware from './middleware/auth.middleware'
 import CheckInOutController from './controllers/checkin-out.controller'
 import fileUpload  from 'express-fileupload';
-
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart({
+    uploadDir: './'
+});
 const app = new App({
     port: 5000,
     controllers: [
@@ -19,6 +22,7 @@ const app = new App({
       
       // parse application/json
       // parse application/x-www-form-urlencoded
+      multipartMiddleware,
       fileUpload({
         limits: { fileSize: 50 * 1024 * 1024 },
       }),

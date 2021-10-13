@@ -2,6 +2,24 @@ import * as express from 'express'
 import { Request, Response } from 'express'
 import { body, header, validationResult } from 'express-validator';
 import DB_Customer from '../services/customer.service';
+const  path = require('path');
+const PATH = './uploads';
+const multer = require('multer');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, PATH);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+});
+
+
+let upload = multer({
+  storage: storage
+});
 
 class CustomerController {
     public path = '/customer'
@@ -12,7 +30,7 @@ class CustomerController {
     }
 
     public initRoutes() {
-        this.router.post('/create', [], this.create)
+        this.router.post('/create', upload.single('image'), this.create)
         this.router.post('/delete', this.validateBody('delete'), this.delete)
         this.router.post('/view', this.validateBody('view'), this.view)
         this.router.post('/upload', this.validateBody('upload'), this.upload)
@@ -23,7 +41,7 @@ class CustomerController {
     // create new customer
     create = (req: Request, res: Response) => {
     
-      
+      console.log(req.body, 'request body')
       new DB_Customer().addCustomer( req.body, res);
      
     }

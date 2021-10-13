@@ -1,6 +1,11 @@
 import express from 'express'
 import { Application } from 'express'
 import cors from 'cors';
+const multer = require('multer');
+const upload = multer();
+
+const bodyParser = require("body-parser");
+
 
 class App {
     public app: Application
@@ -25,6 +30,11 @@ class App {
             origin: '*'
         };
         this.app.use(cors(options));
+       this.app.use(upload.any());
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({
+            extended: true
+        }));
     }
 
     private routes(controllers: { forEach: (arg0: (controller: any) => void) => void; }) {
