@@ -12,7 +12,7 @@ class CustomerController {
     }
 
     public initRoutes() {
-        this.router.post('/create', this.validateBody('create'), this.create)
+        this.router.post('/create', [], this.create)
         this.router.post('/delete', this.validateBody('delete'), this.delete)
         this.router.post('/view', this.validateBody('view'), this.view)
         this.router.post('/upload', this.validateBody('upload'), this.upload)
@@ -22,15 +22,9 @@ class CustomerController {
 
     // create new customer
     create = (req: Request, res: Response) => {
-      const result = validationResult(req);
-      if (!result.isEmpty()) {
-        return res.status(422).json({ errors: result.array() });
-      }
+    
       
-      const { username, firstname, lastname, address, tel, gender, email, dob } = req.body;
-      let userAttr =  { username, firstname, lastname, address, tel, gender, email, dob }
-      
-      new DB_Customer().addCustomer(userAttr, res);
+      new DB_Customer().addCustomer( req.body, res);
      
     }
 

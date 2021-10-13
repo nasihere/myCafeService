@@ -35,8 +35,9 @@ class DB_Customer{
             } else {
                 res.send({
                     success: true,
-                    message: 'Added Item',
+                    message: 'Added customer',
                     data,
+                    req: req.body,
                     id: Item.id
                 });
             }
