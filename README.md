@@ -79,3 +79,9 @@ http://localhost:5000/check/out
 {
     "id": "a95d48b0-272c-11ec-b0b1-1bfe818a5e3f"
 }
+
+## findByCellPhone
+http://localhost:5000/customer/findByCellPhone
+{
+    "cellphone": "4084667445"
+}

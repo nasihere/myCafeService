@@ -32,7 +32,7 @@ class CustomerController {
     public initRoutes() {
         this.router.post('/create', upload.single('image'), this.create)
         this.router.post('/delete', this.validateBody('delete'), this.delete)
-        this.router.post('/view', this.validateBody('view'), this.view)
+        this.router.post('/findByCellPhone', this.validateBody('findByCellPhone'), this.findByCellPhone)
         this.router.post('/upload', this.validateBody('upload'), this.upload)
 
       }
@@ -63,19 +63,19 @@ class CustomerController {
      
     }
 
-    // view new customer
-    view = (req: Request, res: Response) => {
+    // findByCellPhone new customer
+    findByCellPhone = (req: Request, res: Response) => {
       const result = validationResult(req);
       if (!result.isEmpty()) {
         return res.status(422).json({ errors: result.array() });
       }
       console.log(req.body)
       
-      const { id } = req.body;
+      const { cellphone } = req.body;
            
-      let userAttr =  { id }
+      let userAttr =  { cellphone }
       
-      new DB_Customer().getCustomer(userAttr, res);
+      new DB_Customer().getCustomerByCellPhone(userAttr, res);
      
     }
 
@@ -134,10 +134,9 @@ class CustomerController {
             body('id').notEmpty().isLength({min: 1}),
             
           ]
-        case 'view':
+        case 'findByCellPhone':
           return [
-            body('id').isString().isLength({min: 1})
-          ]
+            body('cellphone').optional({checkFalsy: true}).isString().isLength({min: 10})          ]
         case 'upload':
           return [
             body('custid').isString().isLength({min: 1}),

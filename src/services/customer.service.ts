@@ -69,19 +69,22 @@ class DB_Customer{
             }
         });
     }
-    getCustomer = (req, res) => {
+    getCustomerByCellPhone = (req, res) => {
 
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
         const Item = req;
+        console.log(req, 'Item')
         var params = {
             TableName: config.aws_table_name,
-            Key: {
-                id: req.id
+            FilterExpression: 'cellphone = :cellphone',
+            ExpressionAttributeValues: {
+              ":cellphone":  Item.cellphone 
             }
         };
+        console.log(params, 'params')
           // Call DynamoDB to delete the item to the table
-          docClient.get(params, function (err, data) {
+          docClient.scan(params, function (err, data) {
             if (err) {
                 res.send({
                     success: false,
