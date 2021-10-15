@@ -85,3 +85,9 @@ http://localhost:5000/customer/findByCellPhone
 {
     "cellphone": "4084667445"
 }
+## findByAgentPC
+http://localhost:5000/agent/findByCellPhone
+{
+    "pcname": "4084667445",
+    "username":"nasz.letter@gmail.com"
+}

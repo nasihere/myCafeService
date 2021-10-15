@@ -20,6 +20,7 @@ class DB_Customer{
         const Item = req;
         Item.id = uuidv1();
         Item.createdAt = new Date().toISOString();
+        Item.searchText = JSON.stringify(Item).toString().toLowerCase();
         var params = {
             TableName: config.aws_table_name,
             Item: Item
@@ -194,6 +195,37 @@ class DB_Customer{
                     message: 'update checkout document',
                     data,
                     id:  Item.id
+                });
+            }
+        });
+    }
+    getCustomerBySearchText = (req, res) => {
+
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        const Item = req;
+        console.log(req, 'Item')
+        
+        var params = {
+            TableName: config.aws_table_name,
+            FilterExpression: 'contains (searchText, :searchText)',
+            ExpressionAttributeValues: {
+              ":searchText":  Item.searchText.toString().toLowerCase(),
+            }
+        };
+        console.log(params, 'params')
+          // Call DynamoDB to delete the item to the table
+          docClient.scan(params, function (err, data) {
+            if (err) {
+                res.send({
+                    success: false,
+                    message: err
+                });
+            } else {
+                res.send({
+                    success: true,
+                    message: 'get Item',
+                    data
                 });
             }
         });

@@ -34,6 +34,8 @@ class CustomerController {
         this.router.post('/delete', this.validateBody('delete'), this.delete)
         this.router.post('/findByCellPhone', this.validateBody('findByCellPhone'), this.findByCellPhone)
         this.router.post('/upload', this.validateBody('upload'), this.upload)
+        
+        this.router.post('/findBySearchText', [], this.findBySearch)
 
       }
 
@@ -79,6 +81,16 @@ class CustomerController {
      
     }
 
+    findBySearch = (req: Request, res: Response) => {
+     
+      console.log(req.body)
+      
+           
+      let userAttr =  { ...req.body }
+      
+      new DB_Customer().getCustomerBySearchText(userAttr, res);
+     
+    } 
     
     // upload new customer
     upload = (req: Request, res: Response) => {
