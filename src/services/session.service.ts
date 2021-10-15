@@ -116,5 +116,140 @@ class DB_Session{
             }
         });
     }
+    
+    onlineAgent = (req, res) => {
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        var params = {
+            TableName: config.aws_table_name,
+            Key: {
+                id: req.id
+            },
+            UpdateExpression: `set agentOnline = :agentOnline, lastResponseAt = :lastResponseAt, pcstatus = :pcstatus`,
+            ExpressionAttributeValues: {
+                ":agentOnline": req.online,
+                ":lastResponseAt": new Date().toISOString(),
+                ":pcstatus": 'ready'
+            },
+        };
+        console.log(params, 'update agent pc')
+          // Call DynamoDB to delete the item to the table
+          docClient.update(params, function (err, data) {
+                if (err) {
+                    res.status(400).send({
+                        success: false,
+                        message: err
+                    }).end();
+                } else {
+                    res.status(200).send({
+                        success: true,
+                        message: 'update agent',
+                        data,
+                        req
+                    }).end();
+                }
+            
+        });
+    }
+    findAgentDetails = (req, res) => {
+       
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        
+        var params = {
+            TableName: config.aws_table_name,
+            Key: {
+                id: req.id
+            }
+        };
+        console.log(params, 'get agent machine ')
+          // Call DynamoDB to delete the item to the table
+          docClient.get(params, function (err, data) {
+              console.log(err, 'err') 
+              console.log(data, 'data')
+            if (err) {
+                res.status(400).send({
+                    success: false,
+                    message: err
+                }).end();
+            } else {
+                res.status(200).send({
+                    success: true,
+                    message: 'get agent machine ',
+                    data
+                }).end();
+            }
+        });
+    }
+    bookAgent = (req, res) => {
+       
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        var params = {
+            TableName: config.aws_table_name,
+            Key: {
+                id: req.id
+            },
+            UpdateExpression: `set accessCode = :accessCode,
+            accessAt = :accessAt,
+            timer = :timer,
+            pcstatus = :pcstatus`,
+            ExpressionAttributeValues: {
+                ":accessCode": req.accessCode,
+                ":accessAt": req.accessAt,
+                ":timer": req.timer,
+                ":pcstatus": req.pcstatus
+            },
+        };
+        console.log(params, 'bookAgent ')
+          // Call DynamoDB to delete the item to the table
+          docClient.update(params, function (err, data) {
+                if (err) {
+                    res.status(400).send({
+                        success: false,
+                        message: err
+                    }).end();
+                } else {
+                    res.status(200).send({
+                        success: true,
+                        message: 'bookAgent ',
+                        data,
+                        req
+                    }).end();
+                }
+            
+        });
+    }
+    unlockAgent = (req, res) => {
+       
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        const Item = req;
+        console.log(req, 'item accessCode unlockAgent')
+        var params = {
+            TableName: config.aws_table_name,
+            FilterExpression: 'id = :id AND accessCode = :accessCode',
+            ExpressionAttributeValues: {
+              ":id":  Item.id,
+              ":accessCode": Number(Item.accessCode)
+            }
+        };
+        console.log(params, 'accessCode params')
+          // Call DynamoDB to delete the item to the table
+          docClient.scan(params, function (err, data) {
+            if (err) {
+                res.send({
+                    success: false,
+                    message: err
+                });
+            } else {
+                res.send({
+                    success: true,
+                    message: 'get agent accessCode details',
+                    data
+                });
+            }
+        });
+    }
 }
 export default DB_Session;

@@ -16,7 +16,12 @@ class SessionController {
         this.router.post('/findByPCName', [], this.findByPCName)
         
         this.router.post('/findAllPcs', [], this.getAgentPCs)
+        this.router.post('/onlineAgent', [], this.onlineAgent)
+        this.router.post('/findAgentDetail', [], this.findAgentDetail)
+        this.router.post('/bookAgent', [], this.bookAgent)
+        this.router.post('/unlockAgent', [], this.unlockAgent)
 
+        
 
       }
 
@@ -52,7 +57,50 @@ class SessionController {
         new DB_Session().getAgentPCs(userAttr, res);
        
       }
-
+      onlineAgent = (req: Request, res: Response) => {
+      
+        console.log(req.body)
+        
+        
+             
+        let userAttr =  {  ...req.body }
+        
+        new DB_Session().onlineAgent(userAttr, res);
+       
+      }
+      findAgentDetail = (req: Request, res: Response) => {
+      
+        console.log(req.body)
+        
+        
+             
+        let userAttr =  {  ...req.body }
+        
+        new DB_Session().findAgentDetails(userAttr, res);
+       
+      }
+      bookAgent  = (req: Request, res: Response) => {
+      
+        console.log(req.body)
+        
+        
+             
+        let userAttr =  {  ...req.body }
+        
+        new DB_Session().bookAgent(userAttr, res);
+       
+      }
+      unlockAgent = (req: Request, res: Response) => {
+      
+        console.log(req.body)
+        
+        
+             
+        let userAttr =  {  ...req.body }
+        
+        new DB_Session().unlockAgent(userAttr, res);
+       
+      }
 }
 
 export default SessionController
