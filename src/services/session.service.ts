@@ -4,7 +4,7 @@ import { myAwsConfig } from '../config';
 
 const config = {
     aws_table_name: 'mycafe-session',
-    aws_table_name2: '',
+    aws_table_name2: 'mycafe-billing',
     aws_table_name3: '',
     aws_local_config: {
       //Provide details for local configuration
@@ -125,11 +125,10 @@ class DB_Session{
             Key: {
                 id: req.id
             },
-            UpdateExpression: `set agentOnline = :agentOnline, lastResponseAt = :lastResponseAt, pcstatus = :pcstatus`,
+            UpdateExpression: `set agentOnline = :agentOnline, lastResponseAt = :lastResponseAt`,
             ExpressionAttributeValues: {
                 ":agentOnline": req.online,
-                ":lastResponseAt": new Date().toISOString(),
-                ":pcstatus": 'ready'
+                ":lastResponseAt": new Date().toISOString()
             },
         };
         console.log(params, 'update agent pc')
@@ -193,12 +192,16 @@ class DB_Session{
             UpdateExpression: `set accessCode = :accessCode,
             accessAt = :accessAt,
             timer = :timer,
-            pcstatus = :pcstatus`,
+            pcstatus = :pcstatus,
+            customerId = :customerId,
+            billingId = :billingId`,
             ExpressionAttributeValues: {
                 ":accessCode": req.accessCode,
                 ":accessAt": req.accessAt,
                 ":timer": req.timer,
-                ":pcstatus": req.pcstatus
+                ":pcstatus": req.pcstatus,
+                ":customerId": req.customerId,
+                ":billingId": req.billingId || null
             },
         };
         console.log(params, 'bookAgent ')
@@ -210,6 +213,81 @@ class DB_Session{
                         message: err
                     }).end();
                 } else {
+                    
+                    res.status(200).send({
+                        success: true,
+                        message: 'bookAgent ',
+                        data,
+                        req
+                    }).end();
+                }
+            
+        });
+    }
+    updateBillingEnd = (req, res) => {
+       
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        var params = {
+            TableName: config.aws_table_name,
+            Key: {
+                id: req.agentid
+            },
+            UpdateExpression: `set  pcstatus = :pcstatus, accessCode = :accessCode, timer = :timer, lastResponseAt = :lastResponseAt, accessAt = :accessAt, customerId = :customerId`,
+            ExpressionAttributeValues: {
+                ":pcstatus": req.pcstatus,
+                ":accessCode": null,
+                ":timer": null,
+                ":lastResponseAt": new Date().toISOString(),
+                ":accessAt": null,
+                ":customerId": null
+            },
+        };
+        console.log(params, 'updateBillingId ')
+          // Call DynamoDB to delete the item to the table
+          docClient.update(params, function (err, data) {
+                if (err) {
+                    res.status(400).send({
+                        success: false,
+                        message: err
+                    }).end();
+                } else {
+                    
+                    res.status(200).send({
+                        success: true,
+                        message: 'bookAgent ',
+                        data,
+                        req
+                    }).end();
+                }
+            
+        });
+    }
+    updateBillingId = (req, res) => {
+       
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        var params = {
+            TableName: config.aws_table_name,
+            Key: {
+                id: req.agentid
+            },
+            UpdateExpression: `set billingId = :billingId, pcstatus = :pcstatus`,
+            ExpressionAttributeValues: {
+                ":billingId": req.billingId || null,
+                ":pcstatus": req.pcstatus
+            },
+        };
+        console.log(params, 'updateBillingId ')
+          // Call DynamoDB to delete the item to the table
+          docClient.update(params, function (err, data) {
+                if (err) {
+                    res.status(400).send({
+                        success: false,
+                        message: err
+                    }).end();
+                } else {
+                    
                     res.status(200).send({
                         success: true,
                         message: 'bookAgent ',
@@ -250,6 +328,88 @@ class DB_Session{
                 });
             }
         });
+    }
+
+    billingStart  = (req, res) => {
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+ 
+        let Item = {
+            id: uuidv1(), 
+            billDt:  req.billDt ,
+            agentid: req.agentid,
+            customerid: req.customerid,
+            username: req.username,
+            checkIn: new Date().toISOString(),
+            checkout: null,
+            timer: req.timer
+        };
+        // Item.paid = req.paid;
+        // Item.paidDt = req.paidDt;
+        // Item.cash = req.cash || 'cash';
+        // Item = {...req.products,...req.costs, Item};
+        
+        
+        var params = {
+            TableName: config.aws_table_name2,
+            Item: Item
+        };
+        console.log(params, 'billing start')
+        // Call DynamoDB to add the item to the table
+        docClient.put(params, function (err, data) {
+            if (err) {
+                res.send({
+                    success: false,
+                    message: err
+                });
+            } else {
+                req.billingId = Item.id;
+                req.agentid = Item.agentid;
+                new DB_Session().updateBillingId(req, res);
+
+            }
+        });
+        
+    }
+    billingEnd = (req, res) => {
+        if (!req.billingId) return;
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        console.log(req, 'req')
+        let Item = req;
+        Item.checkout = new Date().toISOString();
+      
+        
+
+        var params = {
+            TableName: config.aws_table_name2,
+            Key: {
+                id: req.billingId,
+            },
+            UpdateExpression: `set checkout = :checkout`,
+            ExpressionAttributeValues: {
+                ":checkout": req.checkout
+            },
+        };
+
+
+        console.log(params, 'customer billing end')
+          // Call DynamoDB to delete the item to the table
+        docClient.update(params, function (err, data) {
+                if (err) {
+                    res.status(400).send({
+                        success: false,
+                        message: err
+                    }).end();
+                } else {
+                    req.billingId = Item.id;
+                    req.agentid = Item.agentid;
+                    new DB_Session().updateBillingEnd(req, res);
+
+                }
+            
+        });
+        
     }
 }
 export default DB_Session;

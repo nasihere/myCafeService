@@ -70,6 +70,37 @@ class DB_Customer{
             }
         });
     }
+    getCustomerById= (req, res) => {
+        if (!req.id) return;
+       
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        
+        var params = {
+            TableName: config.aws_table_name,
+            Key: {
+                id: req.id
+            }
+        };
+        console.log(params, 'get getCustomerById machine ')
+          // Call DynamoDB to delete the item to the table
+          docClient.get(params, function (err, data) {
+              console.log(err, 'err') 
+              console.log(data, 'data')
+            if (err) {
+                res.status(400).send({
+                    success: false,
+                    message: err
+                }).end();
+            } else {
+                res.status(200).send({
+                    success: true,
+                    message: 'get getCustomerById machine ',
+                    data
+                }).end();
+            }
+        });
+    }
     getCustomerByCellPhone = (req, res) => {
 
         AWS.config.update(config.aws_remote_config);

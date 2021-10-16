@@ -86,8 +86,16 @@ class SessionController {
         
              
         let userAttr =  {  ...req.body }
-        
-        new DB_Session().bookAgent(userAttr, res);
+        if (userAttr.pcstatus == 'busy') {
+          new DB_Session().billingStart(userAttr, res);
+        }
+        else if (userAttr.pcstatus == 'finished') {
+         
+          new DB_Session().billingEnd(userAttr, res);
+        }
+        else {
+          new DB_Session().bookAgent(userAttr, res);
+        }
        
       }
       unlockAgent = (req: Request, res: Response) => {
