@@ -467,36 +467,27 @@ class DB_Session{
             productCode1 = :productCode1,
             productQty1 = :productQty1,
             productCost1 = :productCost1,
-            
             productCode2 = :productCode2,
             productQty2 = :productQty2,
             productCost2 = :productCost2,
-            
-            
             productCode3 = :productCode3,
             productQty3 = :productQty3,
             productCost3 = :productCost3,
-            
             productCode4 = :productCode4,
             productQty4 = :productQty4,
             productCost4 = :productCost4,
-
             productCode5 = :productCode5,
             productQty5 = :productQty5,
             productCost5 = :productCost5,
-
             productCode6 = :productCode6,
             productQty6 = :productQty6,
             productCost6 = :productCost6,
-
             productCode7 = :productCode7,
             productQty7 = :productQty7,
             productCost7 = :productCost7,
-
             productCode8 = :productCode8,
             productQty8 = :productQty8,
             productCost8 = :productCost8,
-
             productCode9 = :productCode9,
             productQty9 = :productQty9,
             productCost9 = :productCost9
@@ -556,7 +547,7 @@ class DB_Session{
                         message: err
                     }).end();
                 } else {
-                    req.agentid = Item.agentid;
+                    req.id = req.agentid;
                     req.pcstatus = 'ready';
                     new DB_Session().updateBillPaid(req, res);
 

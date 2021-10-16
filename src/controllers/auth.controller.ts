@@ -67,20 +67,20 @@ class AuthController {
       
 
       const { username, password } = req.body;
-      new DB_Users().getSettings({username}, res);
-      return true;
-      // let cognitoService = new Cognito();
-      // cognitoService.signInUser(username, password)
-      //   .then(success => {
-      //     if (success) {
-      //        new DB_Users().getUsers(success, {username}, res);
-      //       //  const data = success;
+      // new DB_Users().getSettings({username}, res);
+      // return true;
+      let cognitoService = new Cognito();
+      cognitoService.signInUser(username, password)
+        .then(success => {
+          if (success) {
+             new DB_Users().getUsers(success, {username}, res);
+            //  const data = success;
              
-      //     }
-      //     else { 
-      //        res.status(400).end()
-      //     }
-      //   })
+          }
+          else { 
+             res.status(400).end()
+          }
+        })
     }
 
 
