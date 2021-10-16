@@ -19,6 +19,8 @@ class AuthController {
         this.router.post('/verify', this.validateBody('verify'), this.verify)
         this.router.post('/user', this.validateBody('user'), this.user)
         this.router.post('/updateuser', [], this.updateUserDetails)
+        this.router.post('/settings', [], this.getSettings)
+        
       }
 
 
@@ -57,6 +59,28 @@ class AuthController {
           }
           success ? res.status(200).end() : res.status(400).end()
         })
+    }
+
+    // Use username and password to authenticate user
+    getSettings = (req: Request, res: Response) => {
+      console.log(req.body);
+      
+
+      const { username, password } = req.body;
+      new DB_Users().getSettings({username}, res);
+      return true;
+      // let cognitoService = new Cognito();
+      // cognitoService.signInUser(username, password)
+      //   .then(success => {
+      //     if (success) {
+      //        new DB_Users().getUsers(success, {username}, res);
+      //       //  const data = success;
+             
+      //     }
+      //     else { 
+      //        res.status(400).end()
+      //     }
+      //   })
     }
 
 

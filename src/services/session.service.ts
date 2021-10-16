@@ -263,6 +263,42 @@ class DB_Session{
             
         });
     }
+    
+    updateBillPaid = (req, res) => {
+       
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        var params = {
+            TableName: config.aws_table_name,
+            Key: {
+                id: req.agentid
+            },
+            UpdateExpression: `set  pcstatus = :pcstatus, customerId = :customerId`,
+            ExpressionAttributeValues: {
+                ":pcstatus": req.pcstatus,
+                ":customerId": null
+            },
+        };
+        console.log(params, 'updateBillPaid ')
+          // Call DynamoDB to delete the item to the table
+          docClient.update(params, function (err, data) {
+                if (err) {
+                    res.status(400).send({
+                        success: false,
+                        message: err
+                    }).end();
+                } else {
+                    
+                    res.status(200).send({
+                        success: true,
+                        message: 'updateBillPaid ',
+                        data,
+                        req
+                    }).end();
+                }
+            
+        });
+    }
     updateBillingId = (req, res) => {
        
         AWS.config.update(config.aws_remote_config);
@@ -342,7 +378,8 @@ class DB_Session{
             username: req.username,
             checkIn: new Date().toISOString(),
             checkout: null,
-            timer: req.timer
+            timer: req.timer,
+            billPaid: false
         };
         // Item.paid = req.paid;
         // Item.paidDt = req.paidDt;
@@ -388,7 +425,7 @@ class DB_Session{
             },
             UpdateExpression: `set checkout = :checkout`,
             ExpressionAttributeValues: {
-                ":checkout": req.checkout
+                ":checkout": new Date().toISOString()
             },
         };
 
@@ -405,6 +442,123 @@ class DB_Session{
                     req.billingId = Item.id;
                     req.agentid = Item.agentid;
                     new DB_Session().updateBillingEnd(req, res);
+
+                }
+            
+        });
+        
+    }
+    billpaid = (req, res) => {
+        if (!req.billingId) return;
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        console.log(req, 'req')
+        let Item = req;
+      
+        
+
+        var params = {
+            TableName: config.aws_table_name2,
+            Key: {
+                id: req.billingId,
+            },
+            UpdateExpression: `set billPaid = :billPaid, 
+            billTotal = :billTotal,
+            productCode1 = :productCode1,
+            productQty1 = :productQty1,
+            productCost1 = :productCost1,
+            
+            productCode2 = :productCode2,
+            productQty2 = :productQty2,
+            productCost2 = :productCost2,
+            
+            
+            productCode3 = :productCode3,
+            productQty3 = :productQty3,
+            productCost3 = :productCost3,
+            
+            productCode4 = :productCode4,
+            productQty4 = :productQty4,
+            productCost4 = :productCost4,
+
+            productCode5 = :productCode5,
+            productQty5 = :productQty5,
+            productCost5 = :productCost5,
+
+            productCode6 = :productCode6,
+            productQty6 = :productQty6,
+            productCost6 = :productCost6,
+
+            productCode7 = :productCode7,
+            productQty7 = :productQty7,
+            productCost7 = :productCost7,
+
+            productCode8 = :productCode8,
+            productQty8 = :productQty8,
+            productCost8 = :productCost8,
+
+            productCode9 = :productCode9,
+            productQty9 = :productQty9,
+            productCost9 = :productCost9
+            `,
+            ExpressionAttributeValues: {
+                ":billTotal": req.billTotal,
+                ":productCode1": req.productCode1,
+                ":productQty1": req.productQty1,
+                ":productCost1": req.productCost1,
+                
+                ":productCode2": req.productCode2,
+                ":productQty2": req.productQty2,
+                ":productCost2": req.productCost2,
+                
+                ":productCode3": req.productCode3,
+                ":productQty3": req.productQty3,
+                ":productCost3": req.productCost3,
+                
+                ":productCode4": req.productCode4,
+                ":productQty4": req.productQty4,
+                ":productCost4": req.productCost4,
+                
+                ":productCode5": req.productCode5,
+                ":productQty5": req.productQty5,
+                ":productCost5": req.productCost5,
+                
+                ":productCode6": req.productCode6,
+                ":productQty6": req.productQty6,
+                ":productCost6": req.productCost6,
+                
+                
+                ":productCode7": req.productCode7,
+                ":productQty7": req.productQty7,
+                ":productCost7": req.productCost7,
+                
+                
+                ":productCode8": req.productCode8,
+                ":productQty8": req.productQty8,
+                ":productCost8": req.productCost8,
+                
+                
+                ":productCode9": req.productCode9,
+                ":productQty9": req.productQty9,
+                ":productCost9": req.productCost9,
+                
+                ":billPaid": true
+            },
+        };
+
+
+        console.log(params, 'customer billing end')
+          // Call DynamoDB to delete the item to the table
+        docClient.update(params, function (err, data) {
+                if (err) {
+                    res.status(400).send({
+                        success: false,
+                        message: err
+                    }).end();
+                } else {
+                    req.agentid = Item.agentid;
+                    req.pcstatus = 'ready';
+                    new DB_Session().updateBillPaid(req, res);
 
                 }
             

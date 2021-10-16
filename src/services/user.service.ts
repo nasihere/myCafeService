@@ -44,6 +44,46 @@ class DB_Users{
             }
         });
     }
+    getSettings = ( req, res) => {
+
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        const Item = req;
+        var params = {
+            TableName: config.aws_table_name,
+            Key: {
+                username: req.username
+            }
+        };
+        console.log(params, 'get getSettings')
+          // Call DynamoDB to delete the item to the table
+          docClient.get(params, function (err, data) {
+             
+            if (err) {
+                res.status(400).send({
+                    success: false,
+                    message: err
+                }).end();
+            } else {
+                  if (data.Item) {
+                    data.Item.username = null;
+                    data.Item.password = null;
+                    data.Item.email = null;
+                    data.Item.cellPhone = null;
+                    data.Item.cellphone = null;
+                    data.Item.id = null;
+                    
+                  }
+                    
+                console.log(data, ' getSettings,')
+                res.status(200).send({
+                    success: true,
+                    message: 'get getSettings',
+                    data
+                }).end();
+            }
+        });
+    }
     getUsers = (append, req, res) => {
 
         AWS.config.update(config.aws_remote_config);

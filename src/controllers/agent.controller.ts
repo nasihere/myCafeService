@@ -20,6 +20,7 @@ class SessionController {
         this.router.post('/findAgentDetail', [], this.findAgentDetail)
         this.router.post('/bookAgent', [], this.bookAgent)
         this.router.post('/unlockAgent', [], this.unlockAgent)
+        this.router.post('/billpaid', [], this.billpaid)
 
         
 
@@ -107,6 +108,17 @@ class SessionController {
         let userAttr =  {  ...req.body }
         
         new DB_Session().unlockAgent(userAttr, res);
+       
+      }
+      billpaid = (req: Request, res: Response) => {
+      
+        console.log(req.body)
+        
+        
+             
+        let userAttr =  {  ...req.body }
+        
+        new DB_Session().billpaid(userAttr, res);
        
       }
 }
