@@ -336,7 +336,7 @@ class DB_Session{
  
         let Item = {
             id: uuidv1(), 
-            billDt:  req.billDt ,
+            billDt:  new Date().toISOString() ,
             agentid: req.agentid,
             customerid: req.customerid,
             username: req.username,

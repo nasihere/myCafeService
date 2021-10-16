@@ -37,7 +37,8 @@ class CustomerController {
         
         this.router.post('/findBySearchText', [], this.findBySearch)
         this.router.post('/findCustomerById', [], this.findCustomerById)
-        
+        this.router.post('/findBillingId', [], this.findBillingId)
+                
       }
 
 
@@ -63,6 +64,14 @@ class CustomerController {
       let userAttr =  { id }
       
       new DB_Customer().deleteCustomer(userAttr, res);
+     
+    }
+    findBillingId = (req: Request, res: Response) => {
+     
+      console.log(req.body)
+      let userAttr =  { ...req.body }
+      
+      new DB_Customer().getBillingId(userAttr, res);
      
     }
     findCustomerById = (req: Request, res: Response) => {

@@ -5,6 +5,7 @@ const config = {
     aws_table_name: 'mycafe-customer',
     aws_table_name2: 'mycafe-customer-doc',
     aws_table_name3: 'mycafe-check-in-out',
+    aws_table_name4: 'mycafe-billing',
     aws_local_config: {
       //Provide details for local configuration
     },
@@ -70,7 +71,37 @@ class DB_Customer{
             }
         });
     }
-    getCustomerById= (req, res) => {
+    getBillingId = (req, res) => {
+        if (!req.id) return;
+       
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        
+        var params = {
+            TableName: config.aws_table_name4,
+            Key: {
+                id: req.id
+            }
+        };
+        console.log(params, ' getBillingId  ')
+          // Call DynamoDB to delete the item to the table
+          docClient.get(params, function (err, data) {
+              
+            if (err) {
+                res.status(400).send({
+                    success: false,
+                    message: err
+                }).end();
+            } else {
+                res.status(200).send({
+                    success: true,
+                    message: ' getBillingId ',
+                    data
+                }).end();
+            }
+        });
+    }
+    getCustomerById = (req, res) => {
         if (!req.id) return;
        
         AWS.config.update(config.aws_remote_config);
