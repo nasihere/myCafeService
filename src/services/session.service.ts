@@ -17,7 +17,6 @@ class DB_Session{
     addAgentPC = (req, res ) => {
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
-        console.log(req, 'req')
         const Item = req;
         Item.id = uuidv1();
         Item.pcname = req.pcname;
@@ -58,7 +57,6 @@ class DB_Session{
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
         const Item = req;
-        console.log(req, 'Item')
         var params = {
             TableName: config.aws_table_name,
             FilterExpression: 'username = :username AND pcname = :pcname',
@@ -90,7 +88,6 @@ class DB_Session{
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
         const Item = req;
-        console.log(req, 'Item')
         var params = {
             TableName: config.aws_table_name,
             FilterExpression: 'username = :username ',
@@ -377,7 +374,7 @@ class DB_Session{
             customerid: req.customerid,
             username: req.username,
             checkIn: new Date().toISOString(),
-            checkout: null,
+            checkout: req.agentid == 'PC-MISC' ? new Date().toISOString() : null,
             timer: req.timer,
             billPaid: false
         };
@@ -401,6 +398,15 @@ class DB_Session{
                 });
             } else {
                 req.billingId = Item.id;
+                if (req.agentid == 'PC-MISC') {
+                    res.status(200).send({
+                        success: true,
+                        message: 'PC-MISC',
+                        billingId: req.billingId
+                    }).end();
+                    return;
+                }
+               
                 req.agentid = Item.agentid;
                 new DB_Session().updateBillingId(req, res);
 
@@ -412,7 +418,6 @@ class DB_Session{
         if (!req.billingId) return;
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
-        console.log(req, 'req')
         let Item = req;
         Item.checkout = new Date().toISOString();
       
@@ -452,8 +457,7 @@ class DB_Session{
         if (!req.billingId) return;
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
-        console.log(req, 'req')
-        let Item = req;
+     
       
         
 
@@ -550,6 +554,41 @@ class DB_Session{
                     req.id = req.agentid;
                     req.pcstatus = 'ready';
                     new DB_Session().updateBillPaid(req, res);
+
+                }
+            
+        });
+        
+    }
+    billingSessions  = (req, res) => {
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        let Item = req;
+    
+        var params = {
+            TableName: config.aws_table_name2,
+            FilterExpression: 'username = :username',
+            ExpressionAttributeValues: {
+              ":username":  Item.username
+            },
+            Limit: Item.pageLimit || 30,
+            ScanIndexForward: false
+
+        };
+        console.log(params, 'billingSessions')
+          // Call DynamoDB to delete the item to the table
+        docClient.scan(params, function (err, data) {
+                if (err) {
+                    res.status(400).send({
+                        success: false,
+                        message: err
+                    }).end();
+                } else {
+                    res.status(200).send({
+                        success: true,
+                        message: 'billingSessions ',
+                        data
+                    }).end();
 
                 }
             

@@ -21,7 +21,10 @@ class SessionController {
         this.router.post('/bookAgent', [], this.bookAgent)
         this.router.post('/unlockAgent', [], this.unlockAgent)
         this.router.post('/billpaid', [], this.billpaid)
+        this.router.post('/billingStart', [], this.billingMisc)
+        this.router.post('/billingSessions', [], this.billingSessions)
 
+        
         
 
       }
@@ -80,7 +83,13 @@ class SessionController {
         new DB_Session().findAgentDetails(userAttr, res);
        
       }
-      bookAgent  = (req: Request, res: Response) => {
+      billingMisc  = (req: Request, res: Response) => {
+        console.log(req.body)
+        let userAttr =  {  ...req.body }
+        new DB_Session().billingStart(userAttr, res);
+      }
+
+       bookAgent  = (req: Request, res: Response) => {
       
         console.log(req.body)
         
@@ -119,6 +128,17 @@ class SessionController {
         let userAttr =  {  ...req.body }
         
         new DB_Session().billpaid(userAttr, res);
+       
+      }
+      billingSessions= (req: Request, res: Response) => {
+      
+        console.log(req.body)
+        
+        
+             
+        let userAttr =  {  ...req.body }
+        
+        new DB_Session().billingSessions(userAttr, res);
        
       }
 }

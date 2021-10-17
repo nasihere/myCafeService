@@ -270,10 +270,13 @@ class DB_Customer{
         
         var params = {
             TableName: config.aws_table_name,
-            FilterExpression: 'contains (searchText, :searchText)',
+            FilterExpression: 'contains (searchText, :searchText) and username = :username',
             ExpressionAttributeValues: {
               ":searchText":  Item.searchText.toString().toLowerCase(),
-            }
+              ":username":  Item.username
+            },
+            Limit: Item.pageLimit || 30,
+            ScanIndexForward: false
         };
         console.log(params, 'params')
           // Call DynamoDB to delete the item to the table
