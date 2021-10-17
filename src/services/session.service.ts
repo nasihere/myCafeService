@@ -372,6 +372,7 @@ class DB_Session{
             billDt:  new Date().toISOString() ,
             agentid: req.agentid,
             customerid: req.customerid,
+            customerName: req.customerName || null,
             username: req.username,
             checkIn: new Date().toISOString(),
             checkout: req.agentid == 'PC-MISC' ? new Date().toISOString() : null,
@@ -420,7 +421,7 @@ class DB_Session{
         const docClient = new AWS.DynamoDB.DocumentClient();
         let Item = req;
         Item.checkout = new Date().toISOString();
-      
+        
         
 
         var params = {
@@ -428,9 +429,10 @@ class DB_Session{
             Key: {
                 id: req.billingId,
             },
-            UpdateExpression: `set checkout = :checkout`,
+            UpdateExpression: `set checkout = :checkout, customerName = :customerName`,
             ExpressionAttributeValues: {
-                ":checkout": new Date().toISOString()
+                ":checkout": new Date().toISOString(),
+                ":customerName": req.customerName || null
             },
         };
 

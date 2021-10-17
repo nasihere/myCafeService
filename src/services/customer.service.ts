@@ -102,7 +102,12 @@ class DB_Customer{
         });
     }
     getCustomerById = (req, res) => {
-        if (!req.id) return;
+        if (!req.id) {
+            res.status(400).send({
+                success: false,
+                message: 'customer id is null'
+            }).end();
+            return };
        
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
