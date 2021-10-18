@@ -380,7 +380,7 @@ class DB_Session{
             checkIn: new Date().toISOString(),
             checkout: req.agentid == 'PC-MISC' ? new Date().toISOString() : null,
             timer: req.timer,
-            billPaid: false,
+            billPaid: req.billPaid || false,
             selfCheckIn: req.selfCheckin || false
         };
         // Item.paid = req.paid;
