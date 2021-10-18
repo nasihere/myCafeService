@@ -49,22 +49,29 @@ class CheckInOutController {
       var options = {
         host: '2factor.in',
         port: 443,
-        path: `/API/V1/${SMS_INDIA.API_KEY}/SMS/+91${req['cellphone']}/${accessCode}`,
+        path: `/API/V1/${SMS_INDIA.API_KEY}/SMS/+91${req.body['cellphone']}/${accessCode}`,
         method: 'GET'
       };
+      console.log(options, 'SMS ENDPOINT')
 
       var smsRreq = https.request(options, function(res) {
         //console.log('STATUS: ' + res.statusCode);
         //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
-          //console.log('BODY: ' + chunk);
-          new DB_Session().bookAgent({...req.body},resParent);
+          console.log('BODY: ' + chunk);
+          if (chunk['status'] != 'Error') {
+            new DB_Session().bookAgent({...req.body},resParent);
+          }
+          else {
+            return resParent.status(422).json({ chunk });
+          }
+          
         });
       });
 
       smsRreq.on('error', function(e) {
-        //console.log('problem with request: ' + e.message);
+        console.log('problem with request: ' + e.message);
         
       });
 
