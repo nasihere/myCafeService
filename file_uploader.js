@@ -101,7 +101,7 @@ app.post('/uploadfile', upload.single('uploadedImage'),   (req, res, next) => {
 // Create PORT
 const PORT = process.env.PORT || 3000;
  app.listen(PORT, () => {
-  //console.log('Connected to port ' + PORT)
+  console.log('Connected to port ' + PORT)
 })
 
 // const uploadFile = (fileName) => {
