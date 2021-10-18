@@ -17,7 +17,7 @@ class DB_Customer{
     addCustomer = (req, res) => {
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
-        console.log(req, 'req')
+        //console.log(req, 'req')
         const Item = req;
         Item.id = uuidv1();
         Item.createdAt = new Date().toISOString();
@@ -83,7 +83,7 @@ class DB_Customer{
                 id: req.id
             }
         };
-        console.log(params, ' getBillingId  ')
+        //console.log(params, ' getBillingId  ')
           // Call DynamoDB to delete the item to the table
           docClient.get(params, function (err, data) {
               
@@ -118,11 +118,11 @@ class DB_Customer{
                 id: req.id
             }
         };
-        console.log(params, 'get getCustomerById machine ')
+        //console.log(params, 'get getCustomerById machine ')
           // Call DynamoDB to delete the item to the table
           docClient.get(params, function (err, data) {
-              console.log(err, 'err') 
-              console.log(data, 'data')
+              //console.log(err, 'err') 
+              //console.log(data, 'data')
             if (err) {
                 res.status(400).send({
                     success: false,
@@ -142,27 +142,39 @@ class DB_Customer{
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
         const Item = req;
-        console.log(req, 'Item')
+        //console.log(req, 'Item')
         var params = {
             TableName: config.aws_table_name,
-            FilterExpression: 'cellphone = :cellphone',
+            FilterExpression: 'cellphone = :cellphone AND username = :username',
             ExpressionAttributeValues: {
-              ":cellphone":  Item.cellphone 
+              ":cellphone":  Item.cellphone,
+              ":username": Item.username
             }
         };
-        console.log(params, 'params')
+        //console.log(params, 'params')
           // Call DynamoDB to delete the item to the table
           docClient.scan(params, function (err, data) {
             if (err) {
                 res.send({
                     success: false,
-                    message: err
+                    message: err,
+                    customerNotFound: true
                 });
             } else {
+                if (!data.Count) {
+                    res.send({
+                        success: false,
+                        message: err,
+                        otpVerification: false,
+                        customerNotFound: true
+                    });
+                    return;
+                }
                 res.send({
                     success: true,
                     message: 'get Item',
-                    data
+                    data,
+                    customerNotFound: false
                 });
             }
         });
@@ -248,7 +260,7 @@ class DB_Customer{
                 ":timeout":  new Date().toISOString(),
             },
         };
-        console.log('params', params)
+        //console.log('params', params)
           // Call DynamoDB to checkin the item to the table
           docClient.update(params, function (err, data) {
             if (err) {
@@ -271,7 +283,7 @@ class DB_Customer{
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
         const Item = req;
-        console.log(req, 'Item')
+        //console.log(req, 'Item')
         
         var params = {
             TableName: config.aws_table_name,
@@ -283,7 +295,7 @@ class DB_Customer{
             Limit: Item.pageLimit || 30,
             ScanIndexForward: false
         };
-        console.log(params, 'params')
+        //console.log(params, 'params')
           // Call DynamoDB to delete the item to the table
           docClient.scan(params, function (err, data) {
             if (err) {

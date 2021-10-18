@@ -45,7 +45,7 @@ class CustomerController {
     // create new customer
     create = (req: Request, res: Response) => {
     
-      console.log(req.body, 'request body')
+      //console.log(req.body, 'request body')
       new DB_Customer().addCustomer( req.body, res);
      
     }
@@ -57,7 +57,7 @@ class CustomerController {
       if (!result.isEmpty()) {
         return res.status(422).json({ errors: result.array() });
       }
-      console.log(req.body)
+      //console.log(req.body)
       
       const { id } = req.body;
            
@@ -68,7 +68,7 @@ class CustomerController {
     }
     findBillingId = (req: Request, res: Response) => {
      
-      console.log(req.body)
+      //console.log(req.body)
       let userAttr =  { ...req.body }
       
       new DB_Customer().getBillingId(userAttr, res);
@@ -76,7 +76,7 @@ class CustomerController {
     }
     findCustomerById = (req: Request, res: Response) => {
      
-      console.log(req.body)
+      //console.log(req.body)
       let userAttr =  { ...req.body }
       
       new DB_Customer().getCustomerById(userAttr, res);
@@ -89,11 +89,10 @@ class CustomerController {
       if (!result.isEmpty()) {
         return res.status(422).json({ errors: result.array() });
       }
-      console.log(req.body)
       
-      const { cellphone } = req.body;
+      
            
-      let userAttr =  { cellphone }
+      let userAttr =  { ...req.body }
       
       new DB_Customer().getCustomerByCellPhone(userAttr, res);
      
@@ -101,7 +100,7 @@ class CustomerController {
 
     findBySearch = (req: Request, res: Response) => {
      
-      console.log(req.body)
+      //console.log(req.body)
       
            
       let userAttr =  { ...req.body }
@@ -117,9 +116,9 @@ class CustomerController {
         return res.status(422).json({ errors: result.array() });
       }
       /*
-      console.log(req.body)
+      //console.log(req.body)
       //@ts-ignore
-      console.log(req.files.foo); 
+      //console.log(req.files.foo); 
       //@ts-ignore
       if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send('No files were uploaded.');
@@ -141,7 +140,7 @@ class CustomerController {
       const { custid, description, filenumber='1234' } = req.body;
       let userAttr =  { custid, description, filenumber }
      
-      console.log('upload request payload', userAttr);
+      //console.log('upload request payload', userAttr);
       new DB_Customer().uploadDocument(userAttr, res);
      
     }
@@ -166,7 +165,9 @@ class CustomerController {
           ]
         case 'findByCellPhone':
           return [
-            body('cellphone').optional({checkFalsy: true}).isString().isLength({min: 10})          ]
+            body('cellphone').optional({checkFalsy: true}).isString().isLength({min: 10}),
+            body('username').notEmpty().isLength({min: 1})
+          ]
         case 'upload':
           return [
             body('custid').isString().isLength({min: 1}),

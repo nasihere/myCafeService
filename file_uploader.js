@@ -12,7 +12,7 @@ const s3 = new AWS.S3({
     accessKeyId: ID,
     secretAccessKey: SECRET
 });
-console.log(BUCKET_NAME, SECRET)
+//console.log(BUCKET_NAME, SECRET)
 
 var fileExtension = require('file-extension')
 const express = require('express'),
@@ -80,7 +80,7 @@ app.post('/uploadfile', upload.single('uploadedImage'),   (req, res, next) => {
         if (err) {
             throw err;
         }
-        console.log(`File uploaded successfully. ${data.Location}`);
+        //console.log(`File uploaded successfully. ${data.Location}`);
          unlinkAsync(req.file.path)
         res.status(200).send({
             statusCode: 200,
@@ -101,7 +101,7 @@ app.post('/uploadfile', upload.single('uploadedImage'),   (req, res, next) => {
 // Create PORT
 const PORT = process.env.PORT || 3000;
  app.listen(PORT, () => {
-  console.log('Connected to port ' + PORT)
+  //console.log('Connected to port ' + PORT)
 })
 
 // const uploadFile = (fileName) => {
@@ -120,6 +120,6 @@ const PORT = process.env.PORT || 3000;
 //         if (err) {
 //             throw err;
 //         }
-//         console.log(`File uploaded successfully. ${data.Location}`);
+//         //console.log(`File uploaded successfully. ${data.Location}`);
 //     });
 // };

@@ -16,7 +16,7 @@ class DB_Users{
     addUsers = (req ) => {
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
-        console.log(req, 'req')
+        //console.log(req, 'req')
         const Item = req;
         Item.id = uuidv1();
         Item.emailVerified = false;
@@ -29,12 +29,12 @@ class DB_Users{
         // Call DynamoDB to add the item to the table
         docClient.put(params, function (err, data) {
             if (err) {
-               console.log({
+               //console.log({
                     success: false,
                     message: err
                 });
             } else {
-                console.log({
+                //console.log({
                     success: true,
                     message: 'Added Users',
                     data,
@@ -55,7 +55,7 @@ class DB_Users{
                 username: req.username
             }
         };
-        console.log(params, 'get getSettings')
+        //console.log(params, 'get getSettings')
           // Call DynamoDB to delete the item to the table
           docClient.get(params, function (err, data) {
              
@@ -75,7 +75,7 @@ class DB_Users{
                     
                   }
                     
-                console.log(data, ' getSettings,')
+                //console.log(data, ' getSettings,')
                 res.status(200).send({
                     success: true,
                     message: 'get getSettings',
@@ -95,11 +95,11 @@ class DB_Users{
                 username: req.username
             }
         };
-        console.log(params, 'get user')
+        //console.log(params, 'get user')
           // Call DynamoDB to delete the item to the table
           docClient.get(params, function (err, data) {
-              console.log(err, 'err') 
-              console.log(append,data, 'data')
+              //console.log(err, 'err') 
+              //console.log(append,data, 'data')
             if (err) {
                 res.status(400).send({
                     success: false,
@@ -128,11 +128,11 @@ class DB_Users{
                 ":emailVerified": true
             },
         };
-        console.log(params, 'update user')
+        //console.log(params, 'update user')
           // Call DynamoDB to delete the item to the table
           docClient.update(params, function (err, data) {
               if (err)
-                console.log(err, 'err') 
+                //console.log(err, 'err') 
               
             
         });
@@ -208,7 +208,7 @@ perCost9 = :perCost9`,
                 ":perCost9": req.perCost9
             },
         };
-        console.log(params, 'update user')
+        //console.log(params, 'update user')
           // Call DynamoDB to delete the item to the table
           docClient.update(params, function (err, data) {
                 if (err) {

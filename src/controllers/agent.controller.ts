@@ -32,7 +32,7 @@ class SessionController {
 
     create = (req: Request, res: Response) => {
     
-      console.log(req.body, 'request body')
+      //console.log(req.body, 'request body')
       new DB_Session().addAgentPC( req.body, res);
      
     }
@@ -40,7 +40,7 @@ class SessionController {
 
     findByPCName = (req: Request, res: Response) => {
       
-      console.log(req.body)
+      //console.log(req.body)
       
       const { pcname, username } = req.body;
            
@@ -52,7 +52,7 @@ class SessionController {
 
     getAgentPCs = (req: Request, res: Response) => {
       
-        console.log(req.body)
+        //console.log(req.body)
         
         const {  username } = req.body;
              
@@ -63,7 +63,7 @@ class SessionController {
       }
       onlineAgent = (req: Request, res: Response) => {
       
-        console.log(req.body)
+        //console.log(req.body)
         
         
              
@@ -74,7 +74,7 @@ class SessionController {
       }
       findAgentDetail = (req: Request, res: Response) => {
       
-        console.log(req.body)
+        //console.log(req.body)
         
         
              
@@ -84,14 +84,14 @@ class SessionController {
        
       }
       billingMisc  = (req: Request, res: Response) => {
-        console.log(req.body)
+        //console.log(req.body)
         let userAttr =  {  ...req.body }
         new DB_Session().billingStart(userAttr, res);
       }
 
        bookAgent  = (req: Request, res: Response) => {
       
-        console.log(req.body)
+        //console.log(req.body, 'bookAgent body')
         
         
              
@@ -110,7 +110,7 @@ class SessionController {
       }
       unlockAgent = (req: Request, res: Response) => {
       
-        console.log(req.body)
+        //console.log(req.body)
         
         
              
@@ -121,7 +121,7 @@ class SessionController {
       }
       billpaid = (req: Request, res: Response) => {
       
-        console.log(req.body)
+        //console.log(req.body)
         
         
              
@@ -132,7 +132,7 @@ class SessionController {
       }
       billingSessions= (req: Request, res: Response) => {
       
-        console.log(req.body)
+        //console.log(req.body)
         
         
              

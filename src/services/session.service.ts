@@ -65,7 +65,7 @@ class DB_Session{
               ":pcname": Item.pcname
             }
         };
-        console.log(params, 'params')
+        //console.log(params, 'params')
           // Call DynamoDB to delete the item to the table
           docClient.scan(params, function (err, data) {
             if (err) {
@@ -96,7 +96,7 @@ class DB_Session{
              
             }
         };
-        console.log(params, 'params')
+        //console.log(params, 'params')
           // Call DynamoDB to delete the item to the table
           docClient.scan(params, function (err, data) {
             if (err) {
@@ -128,7 +128,7 @@ class DB_Session{
                 ":lastResponseAt": new Date().toISOString()
             },
         };
-        console.log(params, 'update agent pc')
+        //console.log(params, 'update agent pc')
           // Call DynamoDB to delete the item to the table
           docClient.update(params, function (err, data) {
                 if (err) {
@@ -158,11 +158,11 @@ class DB_Session{
                 id: req.id
             }
         };
-        console.log(params, 'get agent machine ')
+        //console.log(params, 'get agent machine ')
           // Call DynamoDB to delete the item to the table
           docClient.get(params, function (err, data) {
-              console.log(err, 'err') 
-              console.log(data, 'data')
+              //console.log(err, 'err') 
+              //console.log(data, 'data')
             if (err) {
                 res.status(400).send({
                     success: false,
@@ -191,17 +191,20 @@ class DB_Session{
             timer = :timer,
             pcstatus = :pcstatus,
             customerId = :customerId,
-            billingId = :billingId`,
+            billingId = :billingId,
+            selfCheckin = :selfCheckin`,
             ExpressionAttributeValues: {
                 ":accessCode": req.accessCode,
                 ":accessAt": req.accessAt,
                 ":timer": req.timer,
                 ":pcstatus": req.pcstatus,
                 ":customerId": req.customerId,
-                ":billingId": req.billingId || null
+                ":billingId": req.billingId || null,
+                ":selfCheckin": req.selfCheckin || false
             },
         };
-        console.log(params, 'bookAgent ')
+        //console.log(params, 'bookAgent ')
+        //console.log(req, 'bookAgent ')
           // Call DynamoDB to delete the item to the table
           docClient.update(params, function (err, data) {
                 if (err) {
@@ -240,7 +243,7 @@ class DB_Session{
                 ":customerId": null
             },
         };
-        console.log(params, 'updateBillingId ')
+        //console.log(params, 'updateBillingId ')
           // Call DynamoDB to delete the item to the table
           docClient.update(params, function (err, data) {
                 if (err) {
@@ -276,7 +279,7 @@ class DB_Session{
                 ":customerId": null
             },
         };
-        console.log(params, 'updateBillPaid ')
+        //console.log(params, 'updateBillPaid ')
           // Call DynamoDB to delete the item to the table
           docClient.update(params, function (err, data) {
                 if (err) {
@@ -311,7 +314,7 @@ class DB_Session{
                 ":pcstatus": req.pcstatus
             },
         };
-        console.log(params, 'updateBillingId ')
+        //console.log(params, 'updateBillingId ')
           // Call DynamoDB to delete the item to the table
           docClient.update(params, function (err, data) {
                 if (err) {
@@ -336,7 +339,7 @@ class DB_Session{
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
         const Item = req;
-        console.log(req, 'item accessCode unlockAgent')
+        //console.log(req, 'item accessCode unlockAgent')
         var params = {
             TableName: config.aws_table_name,
             FilterExpression: 'id = :id AND accessCode = :accessCode',
@@ -345,7 +348,7 @@ class DB_Session{
               ":accessCode": Number(Item.accessCode)
             }
         };
-        console.log(params, 'accessCode params')
+        //console.log(params, 'accessCode params')
           // Call DynamoDB to delete the item to the table
           docClient.scan(params, function (err, data) {
             if (err) {
@@ -377,7 +380,8 @@ class DB_Session{
             checkIn: new Date().toISOString(),
             checkout: req.agentid == 'PC-MISC' ? new Date().toISOString() : null,
             timer: req.timer,
-            billPaid: false
+            billPaid: false,
+            selfCheckIn: req.selfCheckin || false
         };
         // Item.paid = req.paid;
         // Item.paidDt = req.paidDt;
@@ -389,7 +393,7 @@ class DB_Session{
             TableName: config.aws_table_name2,
             Item: Item
         };
-        console.log(params, 'billing start')
+        //console.log(params, 'billing start')
         // Call DynamoDB to add the item to the table
         docClient.put(params, function (err, data) {
             if (err) {
@@ -437,7 +441,7 @@ class DB_Session{
         };
 
 
-        console.log(params, 'customer billing end')
+        //console.log(params, 'customer billing end')
           // Call DynamoDB to delete the item to the table
         docClient.update(params, function (err, data) {
                 if (err) {
@@ -544,7 +548,7 @@ class DB_Session{
         };
 
 
-        console.log(params, 'customer billing end')
+        //console.log(params, 'customer billing end')
           // Call DynamoDB to delete the item to the table
         docClient.update(params, function (err, data) {
                 if (err) {
@@ -577,7 +581,7 @@ class DB_Session{
             ScanIndexForward: false
 
         };
-        console.log(params, 'billingSessions')
+        //console.log(params, 'billingSessions')
           // Call DynamoDB to delete the item to the table
         docClient.scan(params, function (err, data) {
                 if (err) {

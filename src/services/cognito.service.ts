@@ -26,10 +26,10 @@ export default class Cognito {
 
     try {
       const data = await this.cognitoIdentity.signUp(params).promise()
-      console.log(data)
+      //console.log(data)
       return true
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       return false
     }
   }
@@ -47,10 +47,10 @@ export default class Cognito {
 
     try {
       let data = await this.cognitoIdentity.initiateAuth(params).promise();
-      console.log(data); 
+      //console.log(data); 
       return data;
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       return false;
     }
   }
@@ -65,10 +65,10 @@ export default class Cognito {
 
     try {
       const cognitoResp = await this.cognitoIdentity.confirmSignUp(params).promise();
-      console.log(cognitoResp)
+      //console.log(cognitoResp)
       return true
     } catch (error) {
-      console.log("error", error)
+      //console.log("error", error)
       return false
     }
   }
@@ -77,14 +77,14 @@ export default class Cognito {
     var params = {
       AccessToken: authorization
     }
-    console.log('params',params)
+    //console.log('params',params)
 
     try {
       let data = await this.cognitoIdentity.getUser(params).promise();
-      console.log(data); 
+      //console.log(data); 
       return data;
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       return false;
     }
   }

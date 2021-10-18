@@ -29,12 +29,12 @@ class AuthController {
     }
     // Signup new user
     signUp = (req: Request, res: Response) => {
-      console.log('controller', 'singup')
+      //console.log('controller', 'singup')
       const result = validationResult(req);
       if (!result.isEmpty()) {
         return res.status(422).json({ errors: result.array() });
       }
-      console.log(req.body)
+      //console.log(req.body)
       const { username, password, email, gender, birthdate, name, family_name, country } = req.body;
       let userAttr = [];
       userAttr.push({ Name: 'email', Value: email});
@@ -63,7 +63,7 @@ class AuthController {
 
     // Use username and password to authenticate user
     getSettings = (req: Request, res: Response) => {
-      console.log(req.body);
+      //console.log(req.body);
       
 
       const { username, password } = req.body;
@@ -78,7 +78,7 @@ class AuthController {
       if (!result.isEmpty()) {
         return res.status(422).json({ errors: result.array() });
       }
-      console.log(req.body);
+      //console.log(req.body);
       
 
       const { username, password } = req.body;
@@ -105,7 +105,7 @@ class AuthController {
       if (!result.isEmpty()) {
         return res.status(422).json({ errors: result.array() });
       }
-      console.log(req.body)
+      //console.log(req.body)
       const { username, code } = req.body;
 
       let cognitoService = new Cognito();
@@ -121,7 +121,7 @@ class AuthController {
     // update user account 
     updateUserDetails = (req: Request, res: Response) => {
       
-      console.log(req.body)
+      //console.log(req.body)
       new DB_Users().updateUser(req.body, res);
     }
 
@@ -131,7 +131,7 @@ class AuthController {
       if (!result.isEmpty()) {
         return res.status(422).json({ errors: result.array() });
       }
-      console.log(req.body);
+      //console.log(req.body);
 
       const  authorization  = req.header('authorization');
       var params = {

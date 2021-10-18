@@ -25,7 +25,7 @@
 //       if (!result.isEmpty()) {
 //         return res.status(422).json({ errors: result.array() });
 //       }
-//       console.log(req.body)
+//       //console.log(req.body)
 //       const { username, password, email, gender, birthdate, name, family_name } = req.body;
 //       let userAttr = [];
 //       userAttr.push({ Name: 'email', Value: email});
@@ -49,7 +49,7 @@
 //       if (!result.isEmpty()) {
 //         return res.status(422).json({ errors: result.array() });
 //       }
-//       console.log(req.body);
+//       //console.log(req.body);
 
 
 //       const { username, password } = req.body;
@@ -67,7 +67,7 @@
 //       if (!result.isEmpty()) {
 //         return res.status(422).json({ errors: result.array() });
 //       }
-//       console.log(req.body)
+//       //console.log(req.body)
 //       const { username, code } = req.body;
 
 //       let cognitoService = new Cognito();
@@ -83,7 +83,7 @@
 //       if (!result.isEmpty()) {
 //         return res.status(422).json({ errors: result.array() });
 //       }
-//       console.log(req.body);
+//       //console.log(req.body);
 
 //       const  authorization  = req.header('authorization');
 //       var params = {
