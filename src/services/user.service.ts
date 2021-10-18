@@ -28,20 +28,7 @@ class DB_Users{
 
         // Call DynamoDB to add the item to the table
         docClient.put(params, function (err, data) {
-            if (err) {
-               //console.log({
-                    success: false,
-                    message: err
-                });
-            } else {
-                //console.log({
-                    success: true,
-                    message: 'Added Users',
-                    data,
-                    id: Item.id,
-                    params
-                });
-            }
+            
         });
     }
     getSettings = ( req, res) => {
@@ -131,8 +118,7 @@ class DB_Users{
         //console.log(params, 'update user')
           // Call DynamoDB to delete the item to the table
           docClient.update(params, function (err, data) {
-              if (err)
-                //console.log(err, 'err') 
+              
               
             
         });
