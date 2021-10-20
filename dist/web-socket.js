@@ -7,8 +7,9 @@ exports.Socket = void 0;
 const net_1 = __importDefault(require("net"));
 class Socket {
     constructor() {
-        this.write = null;
+        this.socketGlobal = null;
         const server = net_1.default.createServer((socket) => {
+            this.socketGlobal = socket;
             socket.on('error', err => {
                 console.error('connected socket: ' + err);
             });
@@ -26,6 +27,9 @@ class Socket {
         server.listen(9898, () => {
             console.log('opened server on', server.address().port);
         });
+    }
+    send(obj) {
+        this.socketGlobal.write(JSON.stringify(obj));
     }
 }
 exports.Socket = Socket;

@@ -2,10 +2,11 @@
 import net from 'net';
 // Create a server object
 export  class Socket {
-  write  = null;
+  socketGlobal  = null;
   constructor() {
     
     const server = net.createServer((socket) => {
+      this.socketGlobal = socket;
       socket.on('error', err=>{
         console.error('connected socket: ' + err);
        });
@@ -29,5 +30,8 @@ export  class Socket {
       console.log('opened server on', server.address().port);
     });
 
+  }
+  send(obj) {
+    this.socketGlobal.write(JSON.stringify(obj));
   }
 }

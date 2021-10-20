@@ -2312,13 +2312,13 @@
         "affectsGlobalScope": false
       },
       "../src/web-socket.ts": {
-        "version": "211e90bd24416f346ea8e9146c9562fbe5df8462694b4ad42f8a682978e07597",
-        "signature": "0eadfce0c741e1ac5678304b1cd2984bae0b11094e3a2ad31acae73b9cc94618",
+        "version": "c1bccc23c8925db57cb861d0763cd7a4278ecfed7f0a30d5ca775e8a8fa0e929",
+        "signature": "65a112d46962fcaa1f5b7ed28faa20f9ea17564fb6e83d49efb12c775963aa0c",
         "affectsGlobalScope": false
       },
       "../src/controllers/agent.controller.ts": {
-        "version": "684027a1e58d37daa84078ca0a6acce5d1f6ea6cbbaf18eb4a1275b414fdd1a6",
-        "signature": "2f27ff1cf4f1e019c55b455ebf803c877442b28533e140c62f34f6959a79f2f9",
+        "version": "59b112dcf2aa60995c01a3dc682ecc84e5d060312d9d06d190c8e9ce3b9eac63",
+        "signature": "976e75f4473f887001a0c7242cd4965214d8be48d9109d83e30fbcda6927e173",
         "affectsGlobalScope": false
       },
       "../src/server.ts": {
@@ -13838,7 +13838,8 @@
       ],
       "../src/controllers/agent.controller.ts": [
         "../node_modules/@types/express-serve-static-core/index.d.ts",
-        "../node_modules/@types/express/index.d.ts"
+        "../node_modules/@types/express/index.d.ts",
+        "../src/web-socket.ts"
       ],
       "../src/controllers/auth.controller.ts": [
         "../node_modules/@types/express-serve-static-core/index.d.ts",

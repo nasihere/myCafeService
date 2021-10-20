@@ -29,12 +29,12 @@ class SessionController {
     constructor() {
         this.path = '/agent';
         this.router = express.Router();
-        this.socket = new web_socket_1.Socket().write;
+        this.socket = new web_socket_1.Socket();
         this.socketHandler = (req, res) => {
             const agentid = req.body.agentid;
             const action = req.body.action;
             const timer = req.body.timer;
-            this.socket(JSON.stringify({ agentid, action, timer }));
+            this.socket.send({ agentid, action, timer });
             res.status(200).send({
                 success: true,
             }).end();

@@ -5,7 +5,7 @@ import DB_Session from '../services/session.service';
 class SessionController {
     public path = '/agent'
     public router = express.Router()
-    socket =  new Socket().write;
+    socket =  new Socket();
     constructor() {
         this.initRoutes()
     }
@@ -38,7 +38,7 @@ class SessionController {
         const action = req.body.action;
         const timer = req.body.timer;
 
-        this.socket(JSON.stringify({agentid, action, timer}))
+        this.socket.send({agentid, action, timer})
         res.status(200).send({
           success: true, 
         }).end();
