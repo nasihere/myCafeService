@@ -368,7 +368,7 @@ class DB_Session{
     }
     checkCheckOut(socket, checkoutVal, agentid, timer, action) {
         if (checkoutVal) {
-            socket(JSON.stringify({agentid, action: 'LOCK', timer}));
+            socket(JSON.stringify({agentid, action, timer}));
         }
     }
     billingStart  = (req, res, socket) => {

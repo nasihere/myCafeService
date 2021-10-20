@@ -26,9 +26,18 @@ const express = __importStar(require("express"));
 const session_service_1 = __importDefault(require("../services/session.service"));
 class SessionController {
     constructor(socket) {
-        this.socket = socket;
         this.path = '/agent';
         this.router = express.Router();
+        this.socket = null;
+        this.socketHandler = (req, res) => {
+            const agentid = req.body.agentid;
+            const action = req.body.action;
+            const timer = req.body.timer;
+            this.socket(JSON.stringify({ agentid, action, timer }));
+            res.status(200).send({
+                success: true,
+            }).end();
+        };
         this.create = (req, res) => {
             new session_service_1.default().addAgentPC(req.body, res);
         };
@@ -78,6 +87,7 @@ class SessionController {
             let userAttr = Object.assign({}, req.body);
             new session_service_1.default().billingSessions(userAttr, res);
         };
+        this.socket = socket;
         this.initRoutes();
     }
     initRoutes() {
@@ -91,6 +101,12 @@ class SessionController {
         this.router.post('/billpaid', [], this.billpaid);
         this.router.post('/billingStart', [], this.billingMisc);
         this.router.post('/billingSessions', [], this.billingSessions);
+        this.router.post('/SOCKET/LOCk', [], this.socketHandler);
+        this.router.post('/SOCKET/SHOW', [], this.socketHandler);
+        this.router.post('/SOCKET/HIDE', [], this.socketHandler);
+        this.router.post('/SOCKET/CLEAR_HISTORY', [], this.socketHandler);
+        this.router.post('/SOCKET/SHUTDOWN_PC', [], this.socketHandler);
+        this.router.post('/SOCKET/AGENT_CLOSED', [], this.socketHandler);
     }
 }
 exports.default = SessionController;

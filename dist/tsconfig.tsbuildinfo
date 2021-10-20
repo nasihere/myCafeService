@@ -2302,7 +2302,7 @@
         "affectsGlobalScope": false
       },
       "../src/services/session.service.ts": {
-        "version": "f95bf15e9eb49c47ba56c2beb2f1878b0253a8c7566652664312d5b21365a200",
+        "version": "a900dadab49fb033af5c2e30b1cd4b07602d96877cba876993c2ae1c746cbccd",
         "signature": "84bfb2d9202ef353bcd745fde4adb6ea2fd468a55ee1c49ae06735ea59f4fb19",
         "affectsGlobalScope": false
       },
@@ -2312,8 +2312,8 @@
         "affectsGlobalScope": false
       },
       "../src/controllers/agent.controller.ts": {
-        "version": "59b9363227958c8fb149408c2b3a9da9a45ac277f8c1e125960630ed8036e780",
-        "signature": "0faedcaa2dd3c3e7c450b6a6ea46d6e6a02915a89688372d7aba29081ffcb820",
+        "version": "c04446abf951e3a39adf4b647f4662e68f8b6ef3c19ee19f7911014937b7e278",
+        "signature": "9bae03e778898fa54d6364eee2b192617397a659f673c74e7218b7ce8566149b",
         "affectsGlobalScope": false
       },
       "../src/web-socket.ts": {

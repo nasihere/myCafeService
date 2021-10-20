@@ -4,8 +4,9 @@ import DB_Session from '../services/session.service';
 class SessionController {
     public path = '/agent'
     public router = express.Router()
-
-    constructor(public socket) {
+    public socket = null;
+    constructor(socket) {
+        this.socket = socket;
         this.initRoutes()
     }
 
@@ -22,12 +23,26 @@ class SessionController {
         this.router.post('/billpaid', [], this.billpaid)
         this.router.post('/billingStart', [], this.billingMisc)
         this.router.post('/billingSessions', [], this.billingSessions)
-
+        this.router.post('/SOCKET/LOCk', [], this.socketHandler)
+        this.router.post('/SOCKET/SHOW', [], this.socketHandler)
+        this.router.post('/SOCKET/HIDE', [], this.socketHandler)
+        this.router.post('/SOCKET/CLEAR_HISTORY', [], this.socketHandler)
+        this.router.post('/SOCKET/SHUTDOWN_PC', [], this.socketHandler)
+        this.router.post('/SOCKET/AGENT_CLOSED', [], this.socketHandler)
         
         
 
       }
+      socketHandler = (req: Request, res: Response) => {
+        const agentid = req.body.agentid;
+        const action = req.body.action;
+        const timer = req.body.timer;
 
+        this.socket(JSON.stringify({agentid, action, timer}))
+        res.status(200).send({
+          success: true, 
+        }).end();
+      }
 
     create = (req: Request, res: Response) => {
     
