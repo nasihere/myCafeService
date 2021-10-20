@@ -100,7 +100,7 @@ class SessionController {
       billingMisc  = (req: Request, res: Response) => {
         //console.log(req.body)
         let userAttr =  {  ...req.body }
-        new DB_Session().billingStart(userAttr, res, this.socket);
+        new DB_Session().billingStart(userAttr, res);
       }
 
        bookAgent  = (req: Request, res: Response) => {

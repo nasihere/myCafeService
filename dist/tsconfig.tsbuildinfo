@@ -2317,7 +2317,7 @@
         "affectsGlobalScope": false
       },
       "../src/controllers/agent.controller.ts": {
-        "version": "46dff9225a768157eb3ff44179dea392b997e49d3f3b40277122203f0dbe347d",
+        "version": "684027a1e58d37daa84078ca0a6acce5d1f6ea6cbbaf18eb4a1275b414fdd1a6",
         "signature": "2f27ff1cf4f1e019c55b455ebf803c877442b28533e140c62f34f6959a79f2f9",
         "affectsGlobalScope": false
       },
@@ -14311,19 +14311,7 @@
       "../node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
       "../src/app.ts",
       "../src/config.ts",
-      [
-        "../src/controllers/agent.controller.ts",
-        [
-          {
-            "file": "../src/controllers/agent.controller.ts",
-            "start": 3279,
-            "length": 11,
-            "messageText": "Expected 2 arguments, but got 3.",
-            "category": 1,
-            "code": 2554
-          }
-        ]
-      ],
+      "../src/controllers/agent.controller.ts",
       "../src/controllers/auth.controller.ts",
       "../src/controllers/checkin-out.controller.ts",
       "../src/controllers/customer.controller.ts",

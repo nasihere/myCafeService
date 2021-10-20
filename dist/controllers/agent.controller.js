@@ -62,7 +62,7 @@ class SessionController {
         };
         this.billingMisc = (req, res) => {
             let userAttr = Object.assign({}, req.body);
-            new session_service_1.default().billingStart(userAttr, res, this.socket);
+            new session_service_1.default().billingStart(userAttr, res);
         };
         this.bookAgent = (req, res) => {
             let userAttr = Object.assign({}, req.body);
