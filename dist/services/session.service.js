@@ -349,6 +349,7 @@ class DB_Session {
                 TableName: config.aws_table_name2,
                 Item: Item
             };
+            const self = this;
             docClient.put(params, function (err, data) {
                 if (err) {
                     res.send({
@@ -367,7 +368,7 @@ class DB_Session {
                         return;
                     }
                     req.agentid = Item.agentid;
-                    this.updateBillingId(req, res);
+                    self.updateBillingId(req, res);
                 }
             });
         };
@@ -390,6 +391,7 @@ class DB_Session {
                     ":customerName": req.customerName || null
                 },
             };
+            const self = this;
             docClient.update(params, function (err, data) {
                 if (err) {
                     res.status(400).send({
@@ -400,7 +402,7 @@ class DB_Session {
                 else {
                     req.billingId = Item.id;
                     req.agentid = Item.agentid;
-                    this.updateBillingEnd(req, res);
+                    self.updateBillingEnd(req, res);
                 }
             });
         };
@@ -476,6 +478,7 @@ class DB_Session {
                     ":billPaid": true
                 },
             };
+            const self = this;
             docClient.update(params, function (err, data) {
                 if (err) {
                     res.status(400).send({
@@ -486,7 +489,7 @@ class DB_Session {
                 else {
                     req.id = req.agentid;
                     req.pcstatus = 'ready';
-                    this.updateBillPaid(req, res);
+                    self.updateBillPaid(req, res);
                 }
             });
         };

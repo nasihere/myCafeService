@@ -2302,7 +2302,7 @@
         "affectsGlobalScope": false
       },
       "../src/services/session.service.ts": {
-        "version": "7a3713adfd6ff0813f915b02838ddbb2c48fdec4747171ee7c3f74f1aa6190b1",
+        "version": "f95bf15e9eb49c47ba56c2beb2f1878b0253a8c7566652664312d5b21365a200",
         "signature": "84bfb2d9202ef353bcd745fde4adb6ea2fd468a55ee1c49ae06735ea59f4fb19",
         "affectsGlobalScope": false
       },

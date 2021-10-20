@@ -7,7 +7,7 @@
     "dev": "nodemon",
     "prestart": "tsc -p .",
     "start": "ts-node dist/server.js",
-    "build": "ng build --prod"
+    "build": "tsc -p ."
   },
   "author": "",
   "license": "ISC",
