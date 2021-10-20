@@ -366,7 +366,7 @@ class DB_Session {
                 }
             });
         };
-        this.billingEnd = (req, res, socket) => {
+        this.billingEnd = (req, res) => {
             if (!req.billingId)
                 return;
             aws_sdk_1.default.config.update(config.aws_remote_config);

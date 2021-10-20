@@ -421,7 +421,7 @@ class DB_Session{
         });
         
     }
-    billingEnd = (req, res, socket) => {
+    billingEnd = (req, res) => {
         if (!req.billingId) return;
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();

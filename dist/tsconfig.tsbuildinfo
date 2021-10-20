@@ -2302,8 +2302,8 @@
         "affectsGlobalScope": false
       },
       "../src/services/session.service.ts": {
-        "version": "8124918ac6e9af1e04aa730cb52f7f13b28a0179437b189111b6911849573d4a",
-        "signature": "56b88d848f8ec443dabf2c8d894fec24a71757222cc5d036c84bf4620eadb19a",
+        "version": "2abf7e0d17b71156bf128d9799e8810b5cd0b4bbaf60487075f948438fbefb0d",
+        "signature": "fbd9699bea2581d040eac546b600bc6bf5fbda216ed288f77a7342a4b8480a4c",
         "affectsGlobalScope": false
       },
       "../src/controllers/checkin-out.controller.ts": {
@@ -14321,24 +14321,6 @@
             "messageText": "Expected 2 arguments, but got 3.",
             "category": 1,
             "code": 2554
-          },
-          {
-            "file": "../src/controllers/agent.controller.ts",
-            "start": 3700,
-            "length": 25,
-            "messageText": "Expected 3 arguments, but got 2.",
-            "category": 1,
-            "code": 2554,
-            "relatedInformation": [
-              {
-                "file": "../src/services/session.service.ts",
-                "start": 14335,
-                "length": 6,
-                "messageText": "An argument for 'socket' was not provided.",
-                "category": 3,
-                "code": 6210
-              }
-            ]
           }
         ]
       ],
