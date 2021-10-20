@@ -323,7 +323,7 @@ class DB_Session {
                 }
             });
         };
-        this.billingStart = (req, res, socket) => {
+        this.billingStart = (req, res) => {
             aws_sdk_1.default.config.update(config.aws_remote_config);
             const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
             let Item = {
@@ -339,12 +339,6 @@ class DB_Session {
                 billPaid: req.billPaid || false,
                 selfCheckIn: req.selfCheckin || false
             };
-            if (Item.checkout == null) {
-                this.checkCheckOut(socket, Item.checkout, Item.agentid, req.timer, 'SETLOGOFF');
-            }
-            else {
-                this.checkCheckOut(socket, Item.checkout, Item.agentid, req.timer, 'LOCK');
-            }
             var params = {
                 TableName: config.aws_table_name2,
                 Item: Item
@@ -379,7 +373,6 @@ class DB_Session {
             const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
             let Item = req;
             Item.checkout = new Date().toISOString();
-            this.checkCheckOut(socket, Item.checkout, Item.agentid, 1, 'LOCK');
             var params = {
                 TableName: config.aws_table_name2,
                 Key: {
@@ -522,14 +515,6 @@ class DB_Session {
                 }
             });
         };
-    }
-    checkCheckOut(socket, checkoutVal, agentid, timer, action) {
-        if (!socket) {
-            console.log('socket is undefined');
-        }
-        if (checkoutVal) {
-            socket(JSON.stringify({ agentid, action, timer }));
-        }
     }
 }
 exports.default = DB_Session;

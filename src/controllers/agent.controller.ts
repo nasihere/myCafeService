@@ -7,7 +7,6 @@ class SessionController {
     public router = express.Router()
     socket =  new Socket().write;
     constructor() {
-        console.log('socket',this.socket)
         this.initRoutes()
     }
 
@@ -112,11 +111,11 @@ class SessionController {
              
         let userAttr =  {  ...req.body }
         if (userAttr.pcstatus == 'busy') {
-          new DB_Session().billingStart(userAttr, res, this.socket);
+          new DB_Session().billingStart(userAttr, res);
         }
         else if (userAttr.pcstatus == 'finished') {
          
-          new DB_Session().billingEnd(userAttr, res, this.socket);
+          new DB_Session().billingEnd(userAttr, res);
         }
         else {
           new DB_Session().bookAgent(userAttr, res);

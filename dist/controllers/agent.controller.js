@@ -67,10 +67,10 @@ class SessionController {
         this.bookAgent = (req, res) => {
             let userAttr = Object.assign({}, req.body);
             if (userAttr.pcstatus == 'busy') {
-                new session_service_1.default().billingStart(userAttr, res, this.socket);
+                new session_service_1.default().billingStart(userAttr, res);
             }
             else if (userAttr.pcstatus == 'finished') {
-                new session_service_1.default().billingEnd(userAttr, res, this.socket);
+                new session_service_1.default().billingEnd(userAttr, res);
             }
             else {
                 new session_service_1.default().bookAgent(userAttr, res);
@@ -88,7 +88,6 @@ class SessionController {
             let userAttr = Object.assign({}, req.body);
             new session_service_1.default().billingSessions(userAttr, res);
         };
-        console.log('socket', this.socket);
         this.initRoutes();
     }
     initRoutes() {

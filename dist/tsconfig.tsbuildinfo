@@ -2302,8 +2302,8 @@
         "affectsGlobalScope": false
       },
       "../src/services/session.service.ts": {
-        "version": "79b067b125f1eb6c953e2dde38c7783f3dcba096dc867179e7d5c82a1a65e349",
-        "signature": "84bfb2d9202ef353bcd745fde4adb6ea2fd468a55ee1c49ae06735ea59f4fb19",
+        "version": "8124918ac6e9af1e04aa730cb52f7f13b28a0179437b189111b6911849573d4a",
+        "signature": "56b88d848f8ec443dabf2c8d894fec24a71757222cc5d036c84bf4620eadb19a",
         "affectsGlobalScope": false
       },
       "../src/controllers/checkin-out.controller.ts": {
@@ -2317,7 +2317,7 @@
         "affectsGlobalScope": false
       },
       "../src/controllers/agent.controller.ts": {
-        "version": "38972b94b4b4d245177ca15d3283f1a6eabb939c602ace6b5465237b2e80904e",
+        "version": "46dff9225a768157eb3ff44179dea392b997e49d3f3b40277122203f0dbe347d",
         "signature": "2f27ff1cf4f1e019c55b455ebf803c877442b28533e140c62f34f6959a79f2f9",
         "affectsGlobalScope": false
       },
@@ -14311,7 +14311,37 @@
       "../node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
       "../src/app.ts",
       "../src/config.ts",
-      "../src/controllers/agent.controller.ts",
+      [
+        "../src/controllers/agent.controller.ts",
+        [
+          {
+            "file": "../src/controllers/agent.controller.ts",
+            "start": 3279,
+            "length": 11,
+            "messageText": "Expected 2 arguments, but got 3.",
+            "category": 1,
+            "code": 2554
+          },
+          {
+            "file": "../src/controllers/agent.controller.ts",
+            "start": 3700,
+            "length": 25,
+            "messageText": "Expected 3 arguments, but got 2.",
+            "category": 1,
+            "code": 2554,
+            "relatedInformation": [
+              {
+                "file": "../src/services/session.service.ts",
+                "start": 14335,
+                "length": 6,
+                "messageText": "An argument for 'socket' was not provided.",
+                "category": 3,
+                "code": 6210
+              }
+            ]
+          }
+        ]
+      ],
       "../src/controllers/auth.controller.ts",
       "../src/controllers/checkin-out.controller.ts",
       "../src/controllers/customer.controller.ts",
