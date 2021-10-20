@@ -1,8 +1,6 @@
 
 import AWS from 'aws-sdk';
 import { myAwsConfig } from '../config';
-import Socket from '../web-socket'
-
 const config = {
     aws_table_name: 'mycafe-session',
     aws_table_name2: 'mycafe-billing',
@@ -14,7 +12,7 @@ const config = {
 }
 import uuidv1 from 'uuid/v1';
 class DB_Session{
-    constructor(public socket: Socket) {
+    constructor() {
 
     }
     addAgentPC = (req, res ) => {
@@ -368,12 +366,12 @@ class DB_Session{
             }
         });
     }
-    checkCheckOut(checkoutVal, agentid, timer) {
+    checkCheckOut(socket, checkoutVal, agentid, timer, action) {
         if (checkoutVal) {
-            this.socket.write(JSON.stringify({agentid, action: 'LOCK', timer}));
+            socket(JSON.stringify({agentid, action: 'LOCK', timer}));
         }
     }
-    billingStart  = (req, res) => {
+    billingStart  = (req, res, socket) => {
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
  
@@ -390,7 +388,12 @@ class DB_Session{
             billPaid: req.billPaid || false,
             selfCheckIn: req.selfCheckin || false
         };
-        this.checkCheckOut(Item.checkout, Item.agentid, req.timer);
+        if (Item.checkout == null) {
+            this.checkCheckOut(socket, Item.checkout, Item.agentid, req.timer, 'SETLOGOFF' );
+        }
+        else {
+            this.checkCheckOut(socket, Item.checkout, Item.agentid, req.timer, 'LOCK');
+        }        
         // Item.paid = req.paid;
         // Item.paidDt = req.paidDt;
         // Item.cash = req.cash || 'cash';
@@ -427,13 +430,13 @@ class DB_Session{
         });
         
     }
-    billingEnd = (req, res) => {
+    billingEnd = (req, res, socket) => {
         if (!req.billingId) return;
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
         let Item = req;
         Item.checkout = new Date().toISOString();
-        this.checkCheckOut(Item.checkout, Item.agentid, 1);
+        this.checkCheckOut(socket, Item.checkout, Item.agentid, 1, 'LOCK');
         
 
         var params = {

@@ -1,12 +1,11 @@
 import * as express from 'express'
 import { Request, Response } from 'express'
 import DB_Session from '../services/session.service';
-import { Socket } from '../web-socket'
 class SessionController {
     public path = '/agent'
     public router = express.Router()
 
-    constructor() {
+    constructor(public socket) {
         this.initRoutes()
     }
 
@@ -86,7 +85,7 @@ class SessionController {
       billingMisc  = (req: Request, res: Response) => {
         //console.log(req.body)
         let userAttr =  {  ...req.body }
-        new DB_Session().billingStart(userAttr, res);
+        new DB_Session().billingStart(userAttr, res, this.socket);
       }
 
        bookAgent  = (req: Request, res: Response) => {
@@ -97,11 +96,11 @@ class SessionController {
              
         let userAttr =  {  ...req.body }
         if (userAttr.pcstatus == 'busy') {
-          new DB_Session().billingStart(userAttr, res);
+          new DB_Session().billingStart(userAttr, res, this.socket);
         }
         else if (userAttr.pcstatus == 'finished') {
          
-          new DB_Session().billingEnd(userAttr, res);
+          new DB_Session().billingEnd(userAttr, res, this.socket);
         }
         else {
           new DB_Session().bookAgent(userAttr, res);
@@ -138,7 +137,7 @@ class SessionController {
              
         let userAttr =  {  ...req.body }
         
-        new DB_Session().billingSessions(userAttr, res, Socket);
+        new DB_Session().billingSessions(userAttr, res);
        
       }
 }

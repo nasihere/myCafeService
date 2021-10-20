@@ -2287,7 +2287,7 @@
         "affectsGlobalScope": false
       },
       "../src/controllers/customer.controller.ts": {
-        "version": "62da61dda4faf81aed9ce31e3c8511c590bd8c0d58efc829492b0047d46f4090",
+        "version": "1e898c4756f5d150b72bbcd17d7ad00229010fb1e1bbcca8dbb16be6cb89b4c9",
         "signature": "2f030fd43a816e27518d2f2c21111b79e344633ddac45b9655de8863589b6fd7",
         "affectsGlobalScope": false
       },
@@ -2302,8 +2302,8 @@
         "affectsGlobalScope": false
       },
       "../src/services/session.service.ts": {
-        "version": "f49f04304e16e9f48fad9c958b227f8aca2454d4ab70727d04c95e582051ff7e",
-        "signature": "1b7984577e8ed36f674a3212eeaa319b27b7542d55963923d09c9b23b909fbb2",
+        "version": "7a3713adfd6ff0813f915b02838ddbb2c48fdec4747171ee7c3f74f1aa6190b1",
+        "signature": "84bfb2d9202ef353bcd745fde4adb6ea2fd468a55ee1c49ae06735ea59f4fb19",
         "affectsGlobalScope": false
       },
       "../src/controllers/checkin-out.controller.ts": {
@@ -2312,12 +2312,17 @@
         "affectsGlobalScope": false
       },
       "../src/controllers/agent.controller.ts": {
-        "version": "1ca0ebd9ed76b8fbfc68c0cce7d2b59140e492bb901ea4484040e95b88f258dc",
-        "signature": "15f4f8bdafdb702424ba4855b631e54f397961abd85c25db5be0346ed2354999",
+        "version": "59b9363227958c8fb149408c2b3a9da9a45ac277f8c1e125960630ed8036e780",
+        "signature": "0faedcaa2dd3c3e7c450b6a6ea46d6e6a02915a89688372d7aba29081ffcb820",
+        "affectsGlobalScope": false
+      },
+      "../src/web-socket.ts": {
+        "version": "aad92976e1f9a332842e0d171c989096483d6db866a13bf4650ceb9ae8a2d645",
+        "signature": "0eadfce0c741e1ac5678304b1cd2984bae0b11094e3a2ad31acae73b9cc94618",
         "affectsGlobalScope": false
       },
       "../src/server.ts": {
-        "version": "d1c2faa2f5f5d1bdd5237203609ba8381de5da19ba079a11292786e4a17ed00e",
+        "version": "3766eceae534e0989b90fed886a8391ed2512bd0f73b1dc38c629cdfbf54ff9b",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -8101,7 +8106,8 @@
         "../src/controllers/auth.controller.ts",
         "../src/controllers/checkin-out.controller.ts",
         "../src/controllers/customer.controller.ts",
-        "../src/middleware/auth.middleware.ts"
+        "../src/middleware/auth.middleware.ts",
+        "../src/web-socket.ts"
       ],
       "../src/services/checkin-out.service.ts": [
         "../node_modules/@types/node/fs.d.ts",
@@ -8153,6 +8159,15 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/aws-sdk/index.d.ts",
         "../src/config.ts"
+      ],
+      "../src/web-socket.ts": [
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/net.d.ts",
+        "../node_modules/@types/node/process.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/process.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts",
+        "../node_modules/@types/node/util.d.ts"
       ]
     },
     "exportedModulesMap": {
@@ -14307,7 +14322,8 @@
       "../src/services/cognito.service.ts",
       "../src/services/customer.service.ts",
       "../src/services/session.service.ts",
-      "../src/services/user.service.ts"
+      "../src/services/user.service.ts",
+      "../src/web-socket.ts"
     ]
   },
   "version": "3.9.7"

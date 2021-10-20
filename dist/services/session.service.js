@@ -323,7 +323,7 @@ class DB_Session {
                 }
             });
         };
-        this.billingStart = (req, res) => {
+        this.billingStart = (req, res, socket) => {
             aws_sdk_1.default.config.update(config.aws_remote_config);
             const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
             let Item = {
@@ -339,6 +339,12 @@ class DB_Session {
                 billPaid: req.billPaid || false,
                 selfCheckIn: req.selfCheckin || false
             };
+            if (Item.checkout == null) {
+                this.checkCheckOut(socket, Item.checkout, Item.agentid, req.timer, 'SETLOGOFF');
+            }
+            else {
+                this.checkCheckOut(socket, Item.checkout, Item.agentid, req.timer, 'LOCK');
+            }
             var params = {
                 TableName: config.aws_table_name2,
                 Item: Item
@@ -361,17 +367,18 @@ class DB_Session {
                         return;
                     }
                     req.agentid = Item.agentid;
-                    new DB_Session().updateBillingId(req, res);
+                    this.updateBillingId(req, res);
                 }
             });
         };
-        this.billingEnd = (req, res) => {
+        this.billingEnd = (req, res, socket) => {
             if (!req.billingId)
                 return;
             aws_sdk_1.default.config.update(config.aws_remote_config);
             const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
             let Item = req;
             Item.checkout = new Date().toISOString();
+            this.checkCheckOut(socket, Item.checkout, Item.agentid, 1, 'LOCK');
             var params = {
                 TableName: config.aws_table_name2,
                 Key: {
@@ -393,7 +400,7 @@ class DB_Session {
                 else {
                     req.billingId = Item.id;
                     req.agentid = Item.agentid;
-                    new DB_Session().updateBillingEnd(req, res);
+                    this.updateBillingEnd(req, res);
                 }
             });
         };
@@ -479,7 +486,7 @@ class DB_Session {
                 else {
                     req.id = req.agentid;
                     req.pcstatus = 'ready';
-                    new DB_Session().updateBillPaid(req, res);
+                    this.updateBillPaid(req, res);
                 }
             });
         };
@@ -512,6 +519,11 @@ class DB_Session {
                 }
             });
         };
+    }
+    checkCheckOut(socket, checkoutVal, agentid, timer, action) {
+        if (checkoutVal) {
+            socket(JSON.stringify({ agentid, action: 'LOCK', timer }));
+        }
     }
 }
 exports.default = DB_Session;

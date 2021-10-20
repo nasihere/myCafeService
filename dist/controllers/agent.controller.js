@@ -25,7 +25,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
 const session_service_1 = __importDefault(require("../services/session.service"));
 class SessionController {
-    constructor() {
+    constructor(socket) {
+        this.socket = socket;
         this.path = '/agent';
         this.router = express.Router();
         this.create = (req, res) => {
@@ -51,15 +52,15 @@ class SessionController {
         };
         this.billingMisc = (req, res) => {
             let userAttr = Object.assign({}, req.body);
-            new session_service_1.default().billingStart(userAttr, res);
+            new session_service_1.default().billingStart(userAttr, res, this.socket);
         };
         this.bookAgent = (req, res) => {
             let userAttr = Object.assign({}, req.body);
             if (userAttr.pcstatus == 'busy') {
-                new session_service_1.default().billingStart(userAttr, res);
+                new session_service_1.default().billingStart(userAttr, res, this.socket);
             }
             else if (userAttr.pcstatus == 'finished') {
-                new session_service_1.default().billingEnd(userAttr, res);
+                new session_service_1.default().billingEnd(userAttr, res, this.socket);
             }
             else {
                 new session_service_1.default().bookAgent(userAttr, res);

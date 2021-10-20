@@ -8,6 +8,10 @@ import AuthMiddleware from './middleware/auth.middleware'
 import CheckInOutController from './controllers/checkin-out.controller'
 import fileUpload  from 'express-fileupload';
 import SessionController from './controllers/agent.controller'
+import { Socket }  from './web-socket'
+const socket = new Socket();
+
+
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart({
     uploadDir: './'
@@ -15,7 +19,7 @@ const multipartMiddleware = multipart({
 const app = new App({
     port: 5000,
     controllers: [
-        new SessionController(),
+        new SessionController(socket),
         new AuthController(),   
         new CustomerController(),
         new CheckInOutController()

@@ -1,16 +1,22 @@
 // Node.js socket server script
 import net from 'net';
 // Create a server object
-export default class Socket {
+export  class Socket {
   write  = null;
   constructor() {
     
     const server = net.createServer((socket) => {
-      
+      socket.on('error', err=>{
+        console.error('connected socket: ' + err);
+       });
       socket.on('data', (data) => {
-        console.log(data.toString());
+        if (!data) return;
+        try {
+          console.log(data.toString());
+        }
+        catch(e) {}
+        
       });
-      socket.write('SERVER: Hello! This is server speaking.<br>');
       this.write = socket.write;
       // socket.end('SERVER: Closing connection now.<br>');
     }).on('error', (err) => {
