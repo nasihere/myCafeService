@@ -1,7 +1,7 @@
 import * as express from 'express'
 import { Request, Response } from 'express'
 import DB_Session from '../services/session.service';
-
+import { Socket } from '../web-socket'
 class SessionController {
     public path = '/agent'
     public router = express.Router()
@@ -138,7 +138,7 @@ class SessionController {
              
         let userAttr =  {  ...req.body }
         
-        new DB_Session().billingSessions(userAttr, res);
+        new DB_Session().billingSessions(userAttr, res, Socket);
        
       }
 }

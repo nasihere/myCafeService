@@ -1,6 +1,7 @@
 
 import AWS from 'aws-sdk';
 import { myAwsConfig } from '../config';
+import Socket from '../web-socket'
 
 const config = {
     aws_table_name: 'mycafe-session',
@@ -13,7 +14,9 @@ const config = {
 }
 import uuidv1 from 'uuid/v1';
 class DB_Session{
+    constructor(public socket: Socket) {
 
+    }
     addAgentPC = (req, res ) => {
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
@@ -365,7 +368,11 @@ class DB_Session{
             }
         });
     }
-
+    checkCheckOut(checkoutVal, agentid, timer) {
+        if (checkoutVal) {
+            this.socket.write(JSON.stringify({agentid, action: 'LOCK', timer}));
+        }
+    }
     billingStart  = (req, res) => {
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
@@ -383,6 +390,7 @@ class DB_Session{
             billPaid: req.billPaid || false,
             selfCheckIn: req.selfCheckin || false
         };
+        this.checkCheckOut(Item.checkout, Item.agentid, req.timer);
         // Item.paid = req.paid;
         // Item.paidDt = req.paidDt;
         // Item.cash = req.cash || 'cash';
@@ -413,7 +421,7 @@ class DB_Session{
                 }
                
                 req.agentid = Item.agentid;
-                new DB_Session().updateBillingId(req, res);
+                this.updateBillingId(req, res);
 
             }
         });
@@ -425,7 +433,7 @@ class DB_Session{
         const docClient = new AWS.DynamoDB.DocumentClient();
         let Item = req;
         Item.checkout = new Date().toISOString();
-        
+        this.checkCheckOut(Item.checkout, Item.agentid, 1);
         
 
         var params = {
@@ -452,7 +460,7 @@ class DB_Session{
                 } else {
                     req.billingId = Item.id;
                     req.agentid = Item.agentid;
-                    new DB_Session().updateBillingEnd(req, res);
+                    this.updateBillingEnd(req, res);
 
                 }
             
@@ -559,7 +567,7 @@ class DB_Session{
                 } else {
                     req.id = req.agentid;
                     req.pcstatus = 'ready';
-                    new DB_Session().updateBillPaid(req, res);
+                    this.updateBillPaid(req, res);
 
                 }
             
