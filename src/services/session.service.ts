@@ -367,7 +367,10 @@ class DB_Session{
         });
     }
     checkCheckOut(socket, checkoutVal, agentid, timer, action) {
-        if (checkoutVal) {
+        if (!socket) {
+            console.log('socket is undefined')
+        }
+        if (checkoutVal ) {
             socket(JSON.stringify({agentid, action, timer}));
         }
     }

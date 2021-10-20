@@ -1,12 +1,13 @@
+import { Socket } from '../web-socket';
 import * as express from 'express'
 import { Request, Response } from 'express'
 import DB_Session from '../services/session.service';
 class SessionController {
     public path = '/agent'
     public router = express.Router()
-    public socket = null;
-    constructor(socket) {
-        this.socket = socket;
+    socket =  new Socket().write;
+    constructor() {
+        console.log('socket',this.socket)
         this.initRoutes()
     }
 

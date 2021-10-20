@@ -10,6 +10,7 @@ export  class Socket {
         console.error('connected socket: ' + err);
        });
       socket.on('data', (data) => {
+        console.log(data.toString());
         if (!data) return;
         try {
           console.log(data.toString());
@@ -17,7 +18,8 @@ export  class Socket {
         catch(e) {}
         
       });
-      this.write = socket.write;
+      
+
       // socket.end('SERVER: Closing connection now.<br>');
     }).on('error', (err) => {
       console.error(err);

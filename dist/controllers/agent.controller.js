@@ -22,13 +22,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const web_socket_1 = require("../web-socket");
 const express = __importStar(require("express"));
 const session_service_1 = __importDefault(require("../services/session.service"));
 class SessionController {
-    constructor(socket) {
+    constructor() {
         this.path = '/agent';
         this.router = express.Router();
-        this.socket = null;
+        this.socket = new web_socket_1.Socket().write;
         this.socketHandler = (req, res) => {
             const agentid = req.body.agentid;
             const action = req.body.action;
@@ -87,7 +88,7 @@ class SessionController {
             let userAttr = Object.assign({}, req.body);
             new session_service_1.default().billingSessions(userAttr, res);
         };
-        this.socket = socket;
+        console.log('socket', this.socket);
         this.initRoutes();
     }
     initRoutes() {

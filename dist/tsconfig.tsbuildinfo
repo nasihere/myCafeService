@@ -2302,7 +2302,7 @@
         "affectsGlobalScope": false
       },
       "../src/services/session.service.ts": {
-        "version": "a900dadab49fb033af5c2e30b1cd4b07602d96877cba876993c2ae1c746cbccd",
+        "version": "79b067b125f1eb6c953e2dde38c7783f3dcba096dc867179e7d5c82a1a65e349",
         "signature": "84bfb2d9202ef353bcd745fde4adb6ea2fd468a55ee1c49ae06735ea59f4fb19",
         "affectsGlobalScope": false
       },
@@ -2311,18 +2311,18 @@
         "signature": "506b55ca412da9db5de93cae1335985fef52ab81f85de39b2e070fb5edaf0ba2",
         "affectsGlobalScope": false
       },
-      "../src/controllers/agent.controller.ts": {
-        "version": "c04446abf951e3a39adf4b647f4662e68f8b6ef3c19ee19f7911014937b7e278",
-        "signature": "9bae03e778898fa54d6364eee2b192617397a659f673c74e7218b7ce8566149b",
-        "affectsGlobalScope": false
-      },
       "../src/web-socket.ts": {
-        "version": "aad92976e1f9a332842e0d171c989096483d6db866a13bf4650ceb9ae8a2d645",
+        "version": "e2cd5043da4afc3b8744052eb4bd0d29980dcd3c9d588f39c1e62993496d74c3",
         "signature": "0eadfce0c741e1ac5678304b1cd2984bae0b11094e3a2ad31acae73b9cc94618",
         "affectsGlobalScope": false
       },
+      "../src/controllers/agent.controller.ts": {
+        "version": "38972b94b4b4d245177ca15d3283f1a6eabb939c602ace6b5465237b2e80904e",
+        "signature": "2f27ff1cf4f1e019c55b455ebf803c877442b28533e140c62f34f6959a79f2f9",
+        "affectsGlobalScope": false
+      },
       "../src/server.ts": {
-        "version": "3766eceae534e0989b90fed886a8391ed2512bd0f73b1dc38c629cdfbf54ff9b",
+        "version": "cc3ee454b74f5ddbdd78defec8330cef2fd53efe41eaf2cd452200303472c1f5",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -8037,7 +8037,8 @@
         "../node_modules/@types/node/ts3.2/process.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts",
         "../node_modules/@types/node/util.d.ts",
-        "../src/services/session.service.ts"
+        "../src/services/session.service.ts",
+        "../src/web-socket.ts"
       ],
       "../src/controllers/auth.controller.ts": [
         "../node_modules/@types/express/index.d.ts",
@@ -8106,8 +8107,7 @@
         "../src/controllers/auth.controller.ts",
         "../src/controllers/checkin-out.controller.ts",
         "../src/controllers/customer.controller.ts",
-        "../src/middleware/auth.middleware.ts",
-        "../src/web-socket.ts"
+        "../src/middleware/auth.middleware.ts"
       ],
       "../src/services/checkin-out.service.ts": [
         "../node_modules/@types/node/fs.d.ts",

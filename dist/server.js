@@ -30,8 +30,6 @@ const auth_middleware_1 = __importDefault(require("./middleware/auth.middleware"
 const checkin_out_controller_1 = __importDefault(require("./controllers/checkin-out.controller"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const agent_controller_1 = __importDefault(require("./controllers/agent.controller"));
-const web_socket_1 = require("./web-socket");
-const socket = new web_socket_1.Socket();
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart({
     uploadDir: './'
@@ -39,7 +37,7 @@ const multipartMiddleware = multipart({
 const app = new app_1.default({
     port: 5000,
     controllers: [
-        new agent_controller_1.default(socket),
+        new agent_controller_1.default(),
         new auth_controller_1.default(),
         new customer_controller_1.default(),
         new checkin_out_controller_1.default()

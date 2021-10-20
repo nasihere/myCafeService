@@ -13,6 +13,7 @@ class Socket {
                 console.error('connected socket: ' + err);
             });
             socket.on('data', (data) => {
+                console.log(data.toString());
                 if (!data)
                     return;
                 try {
@@ -20,7 +21,6 @@ class Socket {
                 }
                 catch (e) { }
             });
-            this.write = socket.write;
         }).on('error', (err) => {
             console.error(err);
         });
