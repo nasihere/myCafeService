@@ -18,6 +18,7 @@ export default class Socket {
     });
     // Open server on port 9898
     server.listen(9898, () => {
+      //@ts-ignore
       console.log('opened server on', server.address().port);
     });
 
