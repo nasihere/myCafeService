@@ -13,7 +13,6 @@ class Socket {
                 console.error('connected socket: ' + err);
             });
             socket.on('data', (data) => {
-                console.log(data.toString());
                 if (!data)
                     return;
                 try {

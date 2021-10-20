@@ -10,8 +10,7 @@ export  class Socket {
         console.error('connected socket: ' + err);
        });
       socket.on('data', (data) => {
-        console.log(data.toString());
-        if (!data) return;
+        if (!data) return;       
         try {
           console.log(data.toString());
         }

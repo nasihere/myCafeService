@@ -2312,7 +2312,7 @@
         "affectsGlobalScope": false
       },
       "../src/web-socket.ts": {
-        "version": "e2cd5043da4afc3b8744052eb4bd0d29980dcd3c9d588f39c1e62993496d74c3",
+        "version": "211e90bd24416f346ea8e9146c9562fbe5df8462694b4ad42f8a682978e07597",
         "signature": "0eadfce0c741e1ac5678304b1cd2984bae0b11094e3a2ad31acae73b9cc94618",
         "affectsGlobalScope": false
       },
