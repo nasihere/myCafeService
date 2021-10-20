@@ -404,6 +404,8 @@ class DB_Session{
             TableName: config.aws_table_name2,
             Item: Item
         };
+        const self = this;
+
         //console.log(params, 'billing start')
         // Call DynamoDB to add the item to the table
         docClient.put(params, function (err, data) {
@@ -424,7 +426,7 @@ class DB_Session{
                 }
                
                 req.agentid = Item.agentid;
-                this.updateBillingId(req, res);
+                self.updateBillingId(req, res);
 
             }
         });
@@ -451,6 +453,7 @@ class DB_Session{
             },
         };
 
+        const self = this;
 
         //console.log(params, 'customer billing end')
           // Call DynamoDB to delete the item to the table
@@ -463,7 +466,7 @@ class DB_Session{
                 } else {
                     req.billingId = Item.id;
                     req.agentid = Item.agentid;
-                    this.updateBillingEnd(req, res);
+                    self.updateBillingEnd(req, res);
 
                 }
             
@@ -558,7 +561,7 @@ class DB_Session{
             },
         };
 
-
+        const self = this;
         //console.log(params, 'customer billing end')
           // Call DynamoDB to delete the item to the table
         docClient.update(params, function (err, data) {
@@ -570,7 +573,7 @@ class DB_Session{
                 } else {
                     req.id = req.agentid;
                     req.pcstatus = 'ready';
-                    this.updateBillPaid(req, res);
+                    self.updateBillPaid(req, res);
 
                 }
             
