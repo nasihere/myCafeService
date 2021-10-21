@@ -129,7 +129,7 @@ class DB_Session{
                 ":lastResponseAt": new Date().toISOString()
             },
         };
-        //console.log(params, 'update agent pc')
+          //console.log(params, 'update agent pc')
           // Call DynamoDB to delete the item to the table
           docClient.update(params, function (err, data) {
                 if (err) {
@@ -234,14 +234,13 @@ class DB_Session{
             Key: {
                 id: req.agentid
             },
-            UpdateExpression: `set  pcstatus = :pcstatus, accessCode = :accessCode, timer = :timer, lastResponseAt = :lastResponseAt, accessAt = :accessAt, customerId = :customerId`,
+            UpdateExpression: `set  pcstatus = :pcstatus, accessCode = :accessCode, timer = :timer, lastResponseAt = :lastResponseAt, accessAt = :accessAt`,
             ExpressionAttributeValues: {
                 ":pcstatus": req.pcstatus,
                 ":accessCode": null,
                 ":timer": null,
                 ":lastResponseAt": new Date().toISOString(),
-                ":accessAt": null,
-                ":customerId": null
+                ":accessAt": null
             },
         };
         //console.log(params, 'updateBillingId ')

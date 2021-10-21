@@ -202,68 +202,8 @@ class DB_Customer {
             });
         };
         this.checkin = (req, res) => {
-            aws_sdk_1.default.config.update(config.aws_remote_config);
-            const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
-            const Item = req;
-            Item.id = v1_1.default();
-            var params = {
-                TableName: config.aws_table_name3,
-                Item: {
-                    id: Item.id,
-                    custid: req.custid,
-                    timein: new Date().toISOString(),
-                    computerno: req.computerno,
-                    inside: true
-                }
-            };
-            docClient.put(params, function (err, data) {
-                if (err) {
-                    res.send({
-                        success: false,
-                        message: err
-                    });
-                }
-                else {
-                    res.send({
-                        success: true,
-                        message: 'add checkin document',
-                        data,
-                        id: Item.id
-                    });
-                }
-            });
         };
         this.checkout = (req, res) => {
-            aws_sdk_1.default.config.update(config.aws_remote_config);
-            const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
-            const Item = req;
-            var params = {
-                TableName: config.aws_table_name3,
-                Key: {
-                    id: req.id
-                },
-                UpdateExpression: `set inside = :inside, timeout = :timeout`,
-                ExpressionAttributeValues: {
-                    ":inside": false,
-                    ":timeout": new Date().toISOString(),
-                },
-            };
-            docClient.update(params, function (err, data) {
-                if (err) {
-                    res.send({
-                        success: false,
-                        message: err
-                    });
-                }
-                else {
-                    res.send({
-                        success: true,
-                        message: 'update checkout document',
-                        data,
-                        id: Item.id
-                    });
-                }
-            });
         };
         this.getCustomerBySearchText = (req, res) => {
             aws_sdk_1.default.config.update(config.aws_remote_config);

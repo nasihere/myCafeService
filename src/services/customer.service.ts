@@ -213,70 +213,70 @@ class DB_Customer{
     }
     checkin = (req, res) => {
 
-        AWS.config.update(config.aws_remote_config);
-        const docClient = new AWS.DynamoDB.DocumentClient();
-        const Item = req;
-        Item.id = uuidv1();
-        var params = {
-            TableName: config.aws_table_name3,
-            Item: {
-                id:  Item.id,
-                custid: req.custid,
-                timein: new Date().toISOString(),
-                computerno: req.computerno,
-                inside: true
-            }
-        };
-          // Call DynamoDB to checkin the item to the table
-          docClient.put(params, function (err, data) {
-            if (err) {
-                res.send({
-                    success: false,
-                    message: err
-                });
-            } else {
-                res.send({
-                    success: true,
-                    message: 'add checkin document',
-                    data,
-                    id:  Item.id
-                });
-            }
-        });
+        // AWS.config.update(config.aws_remote_config);
+        // const docClient = new AWS.DynamoDB.DocumentClient();
+        // const Item = req;
+        // Item.id = uuidv1();
+        // var params = {
+        //     TableName: config.aws_table_name3,
+        //     Item: {
+        //         id:  Item.id,
+        //         custid: req.custid,
+        //         timein: new Date().toISOString(),
+        //         computerno: req.computerno,
+        //         inside: true
+        //     }
+        // };
+        //   // Call DynamoDB to checkin the item to the table
+        //   docClient.put(params, function (err, data) {
+        //     if (err) {
+        //         res.send({
+        //             success: false,
+        //             message: err
+        //         });
+        //     } else {
+        //         res.send({
+        //             success: true,
+        //             message: 'add checkin document',
+        //             data,
+        //             id:  Item.id
+        //         });
+        //     }
+        // });
     }
     checkout = (req, res) => {
 
-        AWS.config.update(config.aws_remote_config);
-        const docClient = new AWS.DynamoDB.DocumentClient();
-        const Item = req;
-        var params = {
-            TableName: config.aws_table_name3,
-            Key: {
-                id: req.id
-            },
-            UpdateExpression: `set inside = :inside, timeout = :timeout`,
-            ExpressionAttributeValues: {
-                ":inside": false,
-                ":timeout":  new Date().toISOString(),
-            },
-        };
-        //console.log('params', params)
-          // Call DynamoDB to checkin the item to the table
-          docClient.update(params, function (err, data) {
-            if (err) {
-                res.send({
-                    success: false,
-                    message: err
-                });
-            } else {
-                res.send({
-                    success: true,
-                    message: 'update checkout document',
-                    data,
-                    id:  Item.id
-                });
-            }
-        });
+        // AWS.config.update(config.aws_remote_config);
+        // const docClient = new AWS.DynamoDB.DocumentClient();
+        // const Item = req;
+        // var params = {
+        //     TableName: config.aws_table_name3,
+        //     Key: {
+        //         id: req.id
+        //     },
+        //     UpdateExpression: `set inside = :inside, timeout = :timeout`,
+        //     ExpressionAttributeValues: {
+        //         ":inside": false,
+        //         ":timeout":  new Date().toISOString(),
+        //     },
+        // };
+        // //console.log('params', params)
+        //   // Call DynamoDB to checkin the item to the table
+        //   docClient.update(params, function (err, data) {
+        //     if (err) {
+        //         res.send({
+        //             success: false,
+        //             message: err
+        //         });
+        //     } else {
+        //         res.send({
+        //             success: true,
+        //             message: 'update checkout document',
+        //             data,
+        //             id:  Item.id
+        //         });
+        //     }
+        // });
     }
     getCustomerBySearchText = (req, res) => {
 

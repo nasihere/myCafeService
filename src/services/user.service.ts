@@ -31,6 +31,11 @@ class DB_Users{
             
         });
     }
+    
+    setSMSCounter = ( req, res) => {
+
+        
+    }
     getSettings = ( req, res) => {
 
         AWS.config.update(config.aws_remote_config);

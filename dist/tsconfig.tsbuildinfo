@@ -2267,8 +2267,8 @@
         "affectsGlobalScope": false
       },
       "../src/services/user.service.ts": {
-        "version": "4c83ae1948dcfb0d2e86fcec1902ada2cabd672c5fa61604921703bffd7cb3f5",
-        "signature": "fe7574b3abf544ae2ee55466cdf82fd7f0ca6e2af4a924851a6edf1909d2059a",
+        "version": "a74667347ade063044acd6ad44d044e7432ee3a4247ebd656687fc2fc7a731ae",
+        "signature": "f0dd01f00c722366e9c48967ae78461c05a5c48940c1bc718fcf145d918dc767",
         "affectsGlobalScope": false
       },
       "../src/services/cognito.service.ts": {
@@ -2282,7 +2282,7 @@
         "affectsGlobalScope": false
       },
       "../src/services/customer.service.ts": {
-        "version": "0479f377e83a5dceed3e988ba492efcdcc9fdddc82938b5fe4c6badf6d19befd",
+        "version": "e90b90c9048fdb2744a636921b98c74d5b7e56c4f1387cd84219edcb5095eb4f",
         "signature": "27179ae7ce981c2fbd9d36c2e4552cadc05ed68e45e1d2cb8ebab6bbeeabd5e5",
         "affectsGlobalScope": false
       },
@@ -2302,12 +2302,12 @@
         "affectsGlobalScope": false
       },
       "../src/services/session.service.ts": {
-        "version": "2abf7e0d17b71156bf128d9799e8810b5cd0b4bbaf60487075f948438fbefb0d",
+        "version": "f37e2c2c36cc1f1749044e1850ebdd002f1756abc991215ef4b4ebdea638da36",
         "signature": "fbd9699bea2581d040eac546b600bc6bf5fbda216ed288f77a7342a4b8480a4c",
         "affectsGlobalScope": false
       },
       "../src/controllers/checkin-out.controller.ts": {
-        "version": "fc47f7508b9c7bcceef62dfc427ec518e9f22cc051ee9d3a7f7aa095cfbda573",
+        "version": "d880ac4f7bf0fe42c93b2a8c1602636b8f1918c84a766d15e937f79b370c6d61",
         "signature": "506b55ca412da9db5de93cae1335985fef52ab81f85de39b2e070fb5edaf0ba2",
         "affectsGlobalScope": false
       },

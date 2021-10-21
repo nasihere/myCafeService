@@ -18,6 +18,7 @@ class CheckInOutController {
     public initRoutes() {
         this.router.post('/sms-otp', this.validateBody('sms-otp'), this.smsOTP)
         this.router.post('/sms-verify', this.validateBody('sms-verify'), this.smsVerify)
+        
 
         
 

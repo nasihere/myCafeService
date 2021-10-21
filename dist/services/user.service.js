@@ -29,6 +29,8 @@ class DB_Users {
             docClient.put(params, function (err, data) {
             });
         };
+        this.setSMSCounter = (req, res) => {
+        };
         this.getSettings = (req, res) => {
             aws_sdk_1.default.config.update(config.aws_remote_config);
             const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
