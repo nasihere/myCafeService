@@ -520,7 +520,7 @@ class DB_Session {
             const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
             let Item = req;
             var params = {
-                TableName: config.aws_table_name2,
+                TableName: config.aws_table_name,
                 Key: {
                     "id": Item.id
                 }

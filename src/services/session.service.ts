@@ -610,7 +610,7 @@ class DB_Session{
     
        
         var params = {
-            TableName:config.aws_table_name2,
+            TableName:config.aws_table_name,
             Key:{
                 "id": Item.id
             }
