@@ -24,6 +24,8 @@ const express = require('express'),
 // Express settings
 const app = express();
 app.use(cors());
+app.use(bodyParser({limit: '50mb'}));
+app.use(bodyParser.json());
 
 app.get('/api', function (req, res) {
   res.end('File catcher');
@@ -56,6 +58,47 @@ var upload = multer({
         cb(undefined, true)
     }
 })
+app.post('/captureImage', function(req, res, next) {
+    console.log('capture image')
+    var base64Data = req.body.base64.replace(/^data:image\/jpeg;base64,/, "");
+    const filename = `my_uploaded_files/uploadedImage-${Date.now()}.png`;
+    fs.writeFile(filename, base64Data, 'base64', function(err) {
+    if(err){
+    console.log(err);
+    }else{
+        
+    // Read content from the file
+    const fileContent = fs.readFileSync(filename);
+
+    // Setting up S3 upload parameters
+    const params = {
+        Bucket: BUCKET_NAME,
+        Key: file.filename, // File name you want to save as in S3
+        Body: fileContent
+    };
+
+    // Uploading files to the bucket
+    s3.upload(params, function(err, data) {
+        if (err) {
+            throw err;
+        }
+        //console.log(`File uploaded successfully. ${data.Location}`);
+         unlinkAsync(filename)
+        res.status(200).send({
+            statusCode: 200,
+            status: 'success',
+            uploadedFile: file,
+            s3URL: data.Location
+        })
+    
+    });
+
+
+    }
+    });
+
+
+});
 app.post('/uploadfile', upload.single('uploadedImage'),   (req, res, next) => {
     const file = req.file
    
