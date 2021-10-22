@@ -12,6 +12,7 @@ class SessionController {
 
     public initRoutes() {
         this.router.post('/create', [], this.create)
+        this.router.post('/remove', [], this.removeAgent)
         
         this.router.post('/findByPCName', [], this.findByPCName)
         
@@ -120,6 +121,17 @@ class SessionController {
         else {
           new DB_Session().bookAgent(userAttr, res);
         }
+       
+      }
+      removeAgent = (req: Request, res: Response) => {
+      
+        //console.log(req.body)
+        
+        
+             
+        let userAttr =  {  ...req.body }
+        
+        new DB_Session().removeAgent(userAttr, res);
        
       }
       unlockAgent = (req: Request, res: Response) => {

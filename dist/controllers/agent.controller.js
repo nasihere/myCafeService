@@ -76,6 +76,10 @@ class SessionController {
                 new session_service_1.default().bookAgent(userAttr, res);
             }
         };
+        this.removeAgent = (req, res) => {
+            let userAttr = Object.assign({}, req.body);
+            new session_service_1.default().removeAgent(userAttr, res);
+        };
         this.unlockAgent = (req, res) => {
             let userAttr = Object.assign({}, req.body);
             new session_service_1.default().unlockAgent(userAttr, res);
@@ -92,6 +96,7 @@ class SessionController {
     }
     initRoutes() {
         this.router.post('/create', [], this.create);
+        this.router.post('/remove', [], this.removeAgent);
         this.router.post('/findByPCName', [], this.findByPCName);
         this.router.post('/findAllPcs', [], this.getAgentPCs);
         this.router.post('/onlineAgent', [], this.onlineAgent);

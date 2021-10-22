@@ -206,13 +206,14 @@ class DB_Session {
                 Key: {
                     id: req.agentid
                 },
-                UpdateExpression: `set  pcstatus = :pcstatus, accessCode = :accessCode, timer = :timer, lastResponseAt = :lastResponseAt, accessAt = :accessAt`,
+                UpdateExpression: `set  pcstatus = :pcstatus, accessCode = :accessCode, timer = :timer, lastResponseAt = :lastResponseAt, accessAt = :accessAt, customerId = :customerId`,
                 ExpressionAttributeValues: {
                     ":pcstatus": req.pcstatus,
                     ":accessCode": null,
                     ":timer": null,
                     ":lastResponseAt": new Date().toISOString(),
-                    ":accessAt": null
+                    ":accessAt": null,
+                    ":customerId": null
                 },
             };
             docClient.update(params, function (err, data) {
@@ -495,6 +496,7 @@ class DB_Session {
                 ExpressionAttributeValues: {
                     ":username": Item.username
                 },
+                Limit: Item.pageLimit || 30,
                 ScanIndexForward: false
             };
             docClient.scan(params, function (err, data) {
@@ -508,6 +510,32 @@ class DB_Session {
                     res.status(200).send({
                         success: true,
                         message: 'billingSessions ',
+                        data
+                    }).end();
+                }
+            });
+        };
+        this.removeAgent = (req, res) => {
+            aws_sdk_1.default.config.update(config.aws_remote_config);
+            const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
+            let Item = req;
+            var params = {
+                TableName: config.aws_table_name2,
+                Key: {
+                    "id": Item.id
+                }
+            };
+            docClient.delete(params, function (err, data) {
+                if (err) {
+                    res.status(400).send({
+                        success: false,
+                        message: err
+                    }).end();
+                }
+                else {
+                    res.status(200).send({
+                        success: true,
+                        message: 'removeAgent ',
                         data
                     }).end();
                 }
