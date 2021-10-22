@@ -578,7 +578,6 @@ class DB_Session{
             ExpressionAttributeValues: {
               ":username":  Item.username
             },
-            Limit: Item.pageLimit || 30,
             ScanIndexForward: false
 
         };
