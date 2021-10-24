@@ -69,11 +69,10 @@ app.post('/captureImage', function(req, res, next) {
         
     // Read content from the file
     const fileContent = fs.readFileSync(filename);
-
     // Setting up S3 upload parameters
     const params = {
         Bucket: BUCKET_NAME,
-        Key: file.filename, // File name you want to save as in S3
+        Key: filename, // File name you want to save as in S3
         Body: fileContent
     };
 
@@ -87,7 +86,7 @@ app.post('/captureImage', function(req, res, next) {
         res.status(200).send({
             statusCode: 200,
             status: 'success',
-            uploadedFile: file,
+            uploadedFile: filename,
             s3URL: data.Location
         })
     
