@@ -71,8 +71,16 @@ class AuthController {
                 return res.status(422).json({ errors: result.array() });
             }
             const { username, password } = req.body;
-            new user_service_1.default().getUsers({}, { username }, res);
-            return true;
+            let cognitoService = new cognito_service_1.default();
+            cognitoService.signInUser(username, password)
+                .then(success => {
+                if (success) {
+                    new user_service_1.default().getUsers(success, { username }, res);
+                }
+                else {
+                    res.status(400).end();
+                }
+            });
         };
         this.verify = (req, res) => {
             const result = express_validator_1.validationResult(req);

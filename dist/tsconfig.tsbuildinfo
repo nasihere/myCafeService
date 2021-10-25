@@ -2277,8 +2277,8 @@
         "affectsGlobalScope": false
       },
       "../src/controllers/auth.controller.ts": {
-        "version": "dd9b53dc1375a8c1846a787d41f3437d029e7f3bb924b9ac960e0af5e491d293",
-        "signature": "3b91fe350262b31197d72f122bd42fc5c2b8a2a86bbf170cbb5a70ec5fd3d7ae",
+        "version": "36a07a5d6dc0712ce574f7e9f7eb927f13649534c15de566216c39250b563c13",
+        "signature": "64c9647ad9f3b58078b50c526a0f9cdf6548d1aee39068d7e27becdebda2c38b",
         "affectsGlobalScope": false
       },
       "../src/services/customer.service.ts": {
