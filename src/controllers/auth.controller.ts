@@ -20,6 +20,7 @@ class AuthController {
         this.router.post('/user', this.validateBody('user'), this.user)
         this.router.post('/updateuser', [], this.updateUserDetails)
         this.router.post('/settings', [], this.getSettings)
+        this.router.post('/SMSCounterAdd', this.validateBody('username'), this.SMSCounterAdd)
         
       }
 
@@ -162,6 +163,11 @@ class AuthController {
             body('username').notEmpty().isLength({min: 5}),
             body('password').isString().isLength({ min: 8}),
           ]
+        case 'username':
+          return [
+            body('username').notEmpty().isLength({min: 5}),
+            
+          ]
         case 'verify':
           return [
             body('username').notEmpty().isLength({min: 5}),
@@ -173,6 +179,17 @@ class AuthController {
               header('authorization').isString().isLength({ min: 8}),
             ]
       }
+    }
+    SMSCounterAdd = (req: Request, res: Response) => {
+      const result = validationResult(req);
+      
+      if (!result.isEmpty()) {
+        return res.status(422).json({ errors: result.array() });
+      }
+      //console.log(req.body);
+
+      new DB_Users().SMSCounterAdd({...req.body});
+      res.status(200).send(true).end()
     }
 }
 

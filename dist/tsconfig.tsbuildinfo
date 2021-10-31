@@ -2267,8 +2267,8 @@
         "affectsGlobalScope": false
       },
       "../src/services/user.service.ts": {
-        "version": "a74667347ade063044acd6ad44d044e7432ee3a4247ebd656687fc2fc7a731ae",
-        "signature": "f0dd01f00c722366e9c48967ae78461c05a5c48940c1bc718fcf145d918dc767",
+        "version": "8e84a9f344f1e0c38990a53ddbc4c63f54c6fdcc1dc37e3696a395fc72bfe508",
+        "signature": "9e89d4652afa91908930ab8804cdc812e765b5f978281f44236a71aeb9a962b4",
         "affectsGlobalScope": false
       },
       "../src/services/cognito.service.ts": {
@@ -2277,8 +2277,8 @@
         "affectsGlobalScope": false
       },
       "../src/controllers/auth.controller.ts": {
-        "version": "36a07a5d6dc0712ce574f7e9f7eb927f13649534c15de566216c39250b563c13",
-        "signature": "64c9647ad9f3b58078b50c526a0f9cdf6548d1aee39068d7e27becdebda2c38b",
+        "version": "1035edd3728985d6f76764b05d5ff2421ce0ed6b13ab8a6a6a376ddcc38b021d",
+        "signature": "4ad4dfe2ad989432ede775aa5f5bcc0769b4996d8a760be0c3cc1ae9c50e07dc",
         "affectsGlobalScope": false
       },
       "../src/services/customer.service.ts": {
@@ -2307,7 +2307,7 @@
         "affectsGlobalScope": false
       },
       "../src/controllers/checkin-out.controller.ts": {
-        "version": "d880ac4f7bf0fe42c93b2a8c1602636b8f1918c84a766d15e937f79b370c6d61",
+        "version": "0c5224169baa581bf10c503f2e4e0ed0fc287e507bff5c6d3019d63abeed677d",
         "signature": "506b55ca412da9db5de93cae1335985fef52ab81f85de39b2e070fb5edaf0ba2",
         "affectsGlobalScope": false
       },
@@ -8064,7 +8064,8 @@
         "../src/config.ts",
         "../src/services/checkin-out.service.ts",
         "../src/services/customer.service.ts",
-        "../src/services/session.service.ts"
+        "../src/services/session.service.ts",
+        "../src/services/user.service.ts"
       ],
       "../src/controllers/customer.controller.ts": [
         "../node_modules/@types/express/index.d.ts",

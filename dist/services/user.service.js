@@ -22,6 +22,8 @@ class DB_Users {
             Item.id = v1_1.default();
             Item.emailVerified = false;
             Item.createdAt = new Date().toISOString();
+            Item.totalSMS = 1000;
+            Item.usedSMS = 0;
             var params = {
                 TableName: config.aws_table_name,
                 Item: Item
@@ -193,6 +195,43 @@ perCost9 = :perCost9`,
                         data,
                         req
                     }).end();
+                }
+            });
+        };
+        this.SMSCounterAdd = (req) => {
+            aws_sdk_1.default.config.update(config.aws_remote_config);
+            const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
+            const Item = req;
+            var params = {
+                TableName: config.aws_table_name,
+                Key: {
+                    username: req.username
+                }
+            };
+            docClient.get(params, function (err, data) {
+                if (err) {
+                }
+                else {
+                    const counter = (data.Item['usedSMS'] + 1);
+                    console.log(counter, 'data');
+                    var params = {
+                        TableName: config.aws_table_name,
+                        Key: {
+                            username: req.username
+                        },
+                        UpdateExpression: "set usedSMS = :usedSMS",
+                        ExpressionAttributeValues: {
+                            ":usedSMS": counter
+                        },
+                    };
+                    docClient.update(params, function (err, data) {
+                        if (err) {
+                            console.log('err in sms counter add', err);
+                        }
+                        else {
+                            console.log('Success', data);
+                        }
+                    });
                 }
             });
         };

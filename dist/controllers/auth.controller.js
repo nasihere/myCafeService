@@ -115,6 +115,14 @@ class AuthController {
                 success ? res.status(200).send(success).end() : res.status(400).end();
             });
         };
+        this.SMSCounterAdd = (req, res) => {
+            const result = express_validator_1.validationResult(req);
+            if (!result.isEmpty()) {
+                return res.status(422).json({ errors: result.array() });
+            }
+            new user_service_1.default().SMSCounterAdd(Object.assign({}, req.body));
+            res.status(200).send(true).end();
+        };
         this.initRoutes();
     }
     initRoutes() {
@@ -125,6 +133,7 @@ class AuthController {
         this.router.post('/user', this.validateBody('user'), this.user);
         this.router.post('/updateuser', [], this.updateUserDetails);
         this.router.post('/settings', [], this.getSettings);
+        this.router.post('/SMSCounterAdd', this.validateBody('username'), this.SMSCounterAdd);
     }
     validateBody(type) {
         switch (type) {
@@ -142,6 +151,10 @@ class AuthController {
                 return [
                     express_validator_1.body('username').notEmpty().isLength({ min: 5 }),
                     express_validator_1.body('password').isString().isLength({ min: 8 }),
+                ];
+            case 'username':
+                return [
+                    express_validator_1.body('username').notEmpty().isLength({ min: 5 }),
                 ];
             case 'verify':
                 return [

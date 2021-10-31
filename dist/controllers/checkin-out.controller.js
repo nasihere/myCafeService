@@ -28,6 +28,7 @@ const express = __importStar(require("express"));
 const express_validator_1 = require("express-validator");
 const customer_service_1 = __importDefault(require("../services/customer.service"));
 const session_service_1 = __importDefault(require("../services/session.service"));
+const user_service_1 = __importDefault(require("../services/user.service"));
 class CheckInOutController {
     constructor() {
         this.path = '/check';
@@ -63,6 +64,7 @@ class CheckInOutController {
                     console.log('BODY: ' + chunk);
                     if (chunk['status'] != 'Error') {
                         new session_service_1.default().bookAgent(Object.assign({}, req.body), resParent);
+                        new user_service_1.default().SMSCounterAdd(Object.assign({}, req.body));
                     }
                     else {
                         return resParent.status(422).json({ chunk });

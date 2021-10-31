@@ -21,6 +21,8 @@ class DB_Users{
         Item.id = uuidv1();
         Item.emailVerified = false;
         Item.createdAt = new Date().toISOString();
+        Item.totalSMS = 1000;
+        Item.usedSMS = 0;
         var params = {
             TableName: config.aws_table_name,
             Item: Item
@@ -98,6 +100,7 @@ class DB_Users{
                     message: err
                 }).end();
             } else {
+               
                 res.status(200).send({
                     success: true,
                     message: 'get user',
@@ -217,6 +220,55 @@ perCost9 = :perCost9`,
                 }
             
         });
+    }
+    
+    
+    SMSCounterAdd = (req) => {
+
+        
+        AWS.config.update(config.aws_remote_config);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+        const Item = req;
+        var params = {
+            TableName: config.aws_table_name,
+            Key: {
+                username: req.username
+            }
+        };
+        //console.log(params, 'get user')
+          // Call DynamoDB to delete the item to the table
+          docClient.get(params, function (err, data) {
+              //console.log(err, 'err') 
+              //console.log(append,data, 'data')
+            if (err) {
+                //console.log(err, 'err') 
+            } else {
+                const counter = (data.Item['usedSMS'] + 1)
+                console.log(counter, 'data');
+                var params = {
+                    TableName: config.aws_table_name,
+                    
+                    Key: {
+                        username: req.username
+                    },
+                    UpdateExpression:"set usedSMS = :usedSMS",
+                    ExpressionAttributeValues: {
+                        ":usedSMS": counter
+                        
+                    },
+                };
+                docClient.update(params, function (err, data) {
+                        if (err) {
+                        console.log('err in sms counter add', err)
+                        } else {
+                            console.log('Success', data)
+                        }
+                    
+                });
+            }
+        });
+
+        
     }
 }
 export default DB_Users;

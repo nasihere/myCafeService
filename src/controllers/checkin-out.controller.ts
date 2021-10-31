@@ -6,6 +6,7 @@ import { body, header, validationResult } from 'express-validator';
 import DB_Customer from '../services/customer.service';
 import DB_CHECKIN_OUT from '../services/checkin-out.service';
 import DB_Session from '../services/session.service';
+import DB_Users from '../services/user.service';
 
 class CheckInOutController {
     public path = '/check'
@@ -63,6 +64,7 @@ class CheckInOutController {
           console.log('BODY: ' + chunk);
           if (chunk['status'] != 'Error') {
             new DB_Session().bookAgent({...req.body},resParent);
+            new DB_Users().SMSCounterAdd({...req.body});
           }
           else {
             return resParent.status(422).json({ chunk });
