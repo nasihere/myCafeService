@@ -577,15 +577,15 @@ class DB_Session{
 
         const currentMonth = new Date();
         Item.billDt1 = currentMonth.toISOString().substr(0,7)
-        currentMonth.setDate(currentMonth.getMonth() - 1);
+        currentMonth.setDate(currentMonth.getDate() - (30 * 1));
         Item.billDt2 = currentMonth.toISOString().substr(0,7)
-        currentMonth.setDate(currentMonth.getMonth() - 2);
+        currentMonth.setDate(currentMonth.getDate() - (30 * 1));
         Item.billDt3 = currentMonth.toISOString().substr(0,7)
-        currentMonth.setDate(currentMonth.getMonth() - 3);
+        currentMonth.setDate(currentMonth.getDate() - (30 * 1));
         Item.billDt4 = currentMonth.toISOString().substr(0,7)
-        currentMonth.setDate(currentMonth.getMonth() - 4);
+        currentMonth.setDate(currentMonth.getDate() - (30 * 1));
         Item.billDt5 = currentMonth.toISOString().substr(0,7)
-        currentMonth.setDate(currentMonth.getMonth() - 5);
+        currentMonth.setDate(currentMonth.getDate() - (30 * 1));
         Item.billDt6 = currentMonth.toISOString().substr(0,7)
         
         var params = {
@@ -604,7 +604,7 @@ class DB_Session{
             ProjectionExpression: 'billDt, billPaid, billTotal, customerName, selfCheckIn, checkIn, checkout, agentid',
 
         };
-        // console.log(params, 'billingSessions')
+        console.log(params, 'billingSessions')
           // Call DynamoDB to delete the item to the table
         docClient.scan(params, function (err, data) {
                 if (err) {

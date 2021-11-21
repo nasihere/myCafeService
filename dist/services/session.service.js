@@ -493,15 +493,15 @@ class DB_Session {
             let Item = req;
             const currentMonth = new Date();
             Item.billDt1 = currentMonth.toISOString().substr(0, 7);
-            currentMonth.setDate(currentMonth.getMonth() - 1);
+            currentMonth.setDate(currentMonth.getDate() - (30 * 1));
             Item.billDt2 = currentMonth.toISOString().substr(0, 7);
-            currentMonth.setDate(currentMonth.getMonth() - 2);
+            currentMonth.setDate(currentMonth.getDate() - (30 * 1));
             Item.billDt3 = currentMonth.toISOString().substr(0, 7);
-            currentMonth.setDate(currentMonth.getMonth() - 3);
+            currentMonth.setDate(currentMonth.getDate() - (30 * 1));
             Item.billDt4 = currentMonth.toISOString().substr(0, 7);
-            currentMonth.setDate(currentMonth.getMonth() - 4);
+            currentMonth.setDate(currentMonth.getDate() - (30 * 1));
             Item.billDt5 = currentMonth.toISOString().substr(0, 7);
-            currentMonth.setDate(currentMonth.getMonth() - 5);
+            currentMonth.setDate(currentMonth.getDate() - (30 * 1));
             Item.billDt6 = currentMonth.toISOString().substr(0, 7);
             var params = {
                 TableName: config.aws_table_name2,
@@ -518,6 +518,7 @@ class DB_Session {
                 ScanIndexForward: false,
                 ProjectionExpression: 'billDt, billPaid, billTotal, customerName, selfCheckIn, checkIn, checkout, agentid',
             };
+            console.log(params, 'billingSessions');
             docClient.scan(params, function (err, data) {
                 if (err) {
                     res.status(400).send({
