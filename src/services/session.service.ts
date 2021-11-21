@@ -571,18 +571,25 @@ class DB_Session{
     billingSessions  = (req, res) => {
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
+        const datetime = new Date().toISOString();
+        const dateTime2 = new Date();
+        dateTime2.setDate(dateTime2.getDate() - 1);
         let Item = req;
-    
+        Item.billDt1 = new Date().toISOString().substr(0,10)
+        Item.billDt2 = dateTime2.toISOString().substr(0,10)
+        
         var params = {
             TableName: config.aws_table_name2,
-            FilterExpression: 'username = :username',
+            FilterExpression: 'username = :username AND (contains (billDt, :billDt1) OR contains (billDt, :billDt2))',
             ExpressionAttributeValues: {
-              ":username":  Item.username
+              ":username":  Item.username,
+              ":billDt1": Item.billDt1,
+              ":billDt2": Item.billDt2
             },
             ScanIndexForward: false
 
         };
-        //console.log(params, 'billingSessions')
+        // console.log(params, 'billingSessions')
           // Call DynamoDB to delete the item to the table
         docClient.scan(params, function (err, data) {
                 if (err) {

@@ -70,6 +70,7 @@ class AuthController {
             if (!result.isEmpty()) {
                 return res.status(422).json({ errors: result.array() });
             }
+            console.log(req.body);
             const { username, password } = req.body;
             let cognitoService = new cognito_service_1.default();
             cognitoService.signInUser(username, password)

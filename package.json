@@ -7,7 +7,7 @@
     "dev": "nodemon",
     "prestart": "tsc -p .",
     "start": "ts-node dist/server.js",
-    "build": "tsc -p ."
+    "build": "tsc -p .; git add .; git commit -nm 'release'; git push;"
   },
   "author": "",
   "license": "ISC",
