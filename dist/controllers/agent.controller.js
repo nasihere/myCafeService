@@ -92,6 +92,10 @@ class SessionController {
             let userAttr = Object.assign({}, req.body);
             new session_service_1.default().billingSessions(userAttr, res);
         };
+        this.billingHistory = (req, res) => {
+            let userAttr = Object.assign({}, req.body);
+            new session_service_1.default().billingHistory(userAttr, res);
+        };
         this.initRoutes();
     }
     initRoutes() {
@@ -106,6 +110,7 @@ class SessionController {
         this.router.post('/billpaid', [], this.billpaid);
         this.router.post('/billingStart', [], this.billingMisc);
         this.router.post('/billingSessions', [], this.billingSessions);
+        this.router.post('/billingHistory', [], this.billingHistory);
         this.router.post('/SOCKET/LOCk', [], this.socketHandler);
         this.router.post('/SOCKET/SHOW', [], this.socketHandler);
         this.router.post('/SOCKET/HIDE', [], this.socketHandler);

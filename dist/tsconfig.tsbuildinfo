@@ -2302,8 +2302,8 @@
         "affectsGlobalScope": false
       },
       "../src/services/session.service.ts": {
-        "version": "43af20e79100eb6c1393a06f581e4be8dee0f36b12d22c2ab04ef7cf83999a9d",
-        "signature": "17b8e7ac363fcb9a130e4e799f2018ef538b63dbd55a573e2c6fd3fde603b0df",
+        "version": "28ff5bd35531a13652e29d9bbf0eef202db2c07d94cd02bd537a6f7f1005b61d",
+        "signature": "9bf71046f132703dda124706847e8e3c1c5057e4b1a726b9da810966e9a8e408",
         "affectsGlobalScope": false
       },
       "../src/controllers/checkin-out.controller.ts": {
@@ -2317,8 +2317,8 @@
         "affectsGlobalScope": false
       },
       "../src/controllers/agent.controller.ts": {
-        "version": "093a3889c5ba89bef686ec2809fb5be90d73a94088d7333db93c9044153fc96a",
-        "signature": "e87190b563ce8b7d3fc84e519a1d7d25973b22661c51991bf0f0abd10c43ef27",
+        "version": "21c207180783741fd342d0ef023543c0cd21b0d954309ca8ca008a9a5146aa86",
+        "signature": "7d9926c80d500a4c299a4c129c14116d25a4dc99b3c594323cadfb25309ef9d7",
         "affectsGlobalScope": false
       },
       "../src/server.ts": {

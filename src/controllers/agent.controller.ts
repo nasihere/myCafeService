@@ -24,6 +24,8 @@ class SessionController {
         this.router.post('/billpaid', [], this.billpaid)
         this.router.post('/billingStart', [], this.billingMisc)
         this.router.post('/billingSessions', [], this.billingSessions)
+        this.router.post('/billingHistory', [], this.billingHistory)
+        
         this.router.post('/SOCKET/LOCk', [], this.socketHandler)
         this.router.post('/SOCKET/SHOW', [], this.socketHandler)
         this.router.post('/SOCKET/HIDE', [], this.socketHandler)
@@ -156,7 +158,7 @@ class SessionController {
         new DB_Session().billpaid(userAttr, res);
        
       }
-      billingSessions= (req: Request, res: Response) => {
+      billingSessions = (req: Request, res: Response) => {
       
         //console.log(req.body)
         
@@ -165,6 +167,17 @@ class SessionController {
         let userAttr =  {  ...req.body }
         
         new DB_Session().billingSessions(userAttr, res);
+       
+      }
+      billingHistory = (req: Request, res: Response) => {
+      
+        //console.log(req.body)
+        
+        
+             
+        let userAttr =  {  ...req.body }
+        
+        new DB_Session().billingHistory(userAttr, res);
        
       }
 }

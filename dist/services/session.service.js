@@ -486,6 +486,54 @@ class DB_Session {
                 }
             });
         };
+        this.billingHistory = (req, res) => {
+            aws_sdk_1.default.config.update(config.aws_remote_config);
+            const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
+            const dateTime2 = new Date();
+            let Item = req;
+            const currentMonth = new Date();
+            Item.billDt1 = currentMonth.toISOString().substr(0, 7);
+            currentMonth.setDate(currentMonth.getMonth() - 1);
+            Item.billDt2 = currentMonth.toISOString().substr(0, 7);
+            currentMonth.setDate(currentMonth.getMonth() - 2);
+            Item.billDt3 = currentMonth.toISOString().substr(0, 7);
+            currentMonth.setDate(currentMonth.getMonth() - 3);
+            Item.billDt4 = currentMonth.toISOString().substr(0, 7);
+            currentMonth.setDate(currentMonth.getMonth() - 4);
+            Item.billDt5 = currentMonth.toISOString().substr(0, 7);
+            currentMonth.setDate(currentMonth.getMonth() - 5);
+            Item.billDt6 = currentMonth.toISOString().substr(0, 7);
+            var params = {
+                TableName: config.aws_table_name2,
+                FilterExpression: 'username = :username AND (contains (billDt, :billDt1) OR contains (billDt, :billDt2) OR contains (billDt, :billDt3) OR contains (billDt, :billDt4) OR contains (billDt, :billDt5) OR contains (billDt, :billDt6))',
+                ExpressionAttributeValues: {
+                    ":username": Item.username,
+                    ":billDt1": Item.billDt1,
+                    ":billDt2": Item.billDt2,
+                    ":billDt3": Item.billDt3,
+                    ":billDt4": Item.billDt4,
+                    ":billDt5": Item.billDt5,
+                    ":billDt6": Item.billDt6
+                },
+                ScanIndexForward: false,
+                ProjectionExpression: 'billDt, billPaid, billTotal, customerName, selfCheckIn, checkIn, checkout, agentid',
+            };
+            docClient.scan(params, function (err, data) {
+                if (err) {
+                    res.status(400).send({
+                        success: false,
+                        message: err
+                    }).end();
+                }
+                else {
+                    res.status(200).send({
+                        success: true,
+                        message: 'billingSessions ',
+                        data
+                    }).end();
+                }
+            });
+        };
         this.billingSessions = (req, res) => {
             aws_sdk_1.default.config.update(config.aws_remote_config);
             const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
