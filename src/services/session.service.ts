@@ -633,19 +633,25 @@ class DB_Session{
         let Item = req;
         Item.billDt1 = new Date().toISOString().substr(0,10)
         Item.billDt2 = dateTime2.toISOString().substr(0,10)
+        dateTime2.setDate(dateTime2.getDate() - 1);
+        Item.billDt3 = dateTime2.toISOString().substr(0,10)
+        dateTime2.setDate(dateTime2.getDate() - 1);
+        Item.billDt4 = dateTime2.toISOString().substr(0,)
         
         var params = {
             TableName: config.aws_table_name2,
-            FilterExpression: 'username = :username AND (contains (billDt, :billDt1) OR contains (billDt, :billDt2))',
+            FilterExpression: 'username = :username AND (contains (billDt, :billDt1) OR contains (billDt, :billDt2) OR contains (billDt, :billDt3)  OR contains (billDt, :billDt4) ) ',
             ExpressionAttributeValues: {
               ":username":  Item.username,
               ":billDt1": Item.billDt1,
-              ":billDt2": Item.billDt2
+              ":billDt2": Item.billDt2,
+              ":billDt3": Item.billDt3,
+              ":billDt4": Item.billDt4
             },
             ScanIndexForward: false
 
         };
-        // console.log(params, 'billingSessions')
+        console.log(params, 'billingSessions')
           // Call DynamoDB to delete the item to the table
         docClient.scan(params, function (err, data) {
                 if (err) {
