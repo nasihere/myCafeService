@@ -109,27 +109,54 @@ class DB_Customer {
             ;
             aws_sdk_1.default.config.update(config.aws_remote_config);
             const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
-            var params = {
-                TableName: config.aws_table_name,
-                Key: {
-                    id: req.id
-                }
-            };
-            docClient.get(params, function (err, data) {
-                if (err) {
-                    res.status(400).send({
-                        success: false,
-                        message: err
-                    }).end();
-                }
-                else {
-                    res.status(200).send({
-                        success: true,
-                        message: 'get getCustomerById machine ',
-                        data
-                    }).end();
-                }
-            });
+            if (req.id == '' || req.id == 'public') {
+                const params = {
+                    TableName: config.aws_table_name,
+                    FilterExpression: 'cellphone = :cellphone AND username = :username',
+                    ExpressionAttributeValues: {
+                        ":cellphone": '8888555538',
+                        ":username": req.username
+                    }
+                };
+                docClient.scan(params, function (err, data) {
+                    if (err) {
+                        res.status(400).send({
+                            success: false,
+                            message: err
+                        }).end();
+                    }
+                    else {
+                        res.status(200).send({
+                            success: true,
+                            message: 'get getCustomerById machine ',
+                            data
+                        }).end();
+                    }
+                });
+            }
+            else {
+                const params = {
+                    TableName: config.aws_table_name,
+                    Key: {
+                        id: req.id
+                    }
+                };
+                docClient.get(params, function (err, data) {
+                    if (err) {
+                        res.status(400).send({
+                            success: false,
+                            message: err
+                        }).end();
+                    }
+                    else {
+                        res.status(200).send({
+                            success: true,
+                            message: 'get getCustomerById machine ',
+                            data
+                        }).end();
+                    }
+                });
+            }
         };
         this.getCustomerByCellPhone = (req, res) => {
             aws_sdk_1.default.config.update(config.aws_remote_config);

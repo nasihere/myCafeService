@@ -111,31 +111,62 @@ class DB_Customer{
        
         AWS.config.update(config.aws_remote_config);
         const docClient = new AWS.DynamoDB.DocumentClient();
-        
-        var params = {
-            TableName: config.aws_table_name,
-            Key: {
-                id: req.id
-            }
-        };
+        if (req.id == '' || req.id == 'public') {
+           
+            const  params = {
+                TableName: config.aws_table_name,
+                FilterExpression: 'cellphone = :cellphone AND username = :username',
+               
+                ExpressionAttributeValues: {
+                    ":cellphone": '8888555538',
+                    ":username": req.username
+                }
+            };
+            docClient.scan(params, function (err, data) {
+                //console.log(err, 'err') 
+                //console.log(data, 'data')
+              if (err) {
+                  res.status(400).send({
+                      success: false,
+                      message: err
+                  }).end();
+              } else {
+                  res.status(200).send({
+                      success: true,
+                      message: 'get getCustomerById machine ',
+                      data
+                  }).end();
+              }
+          });
+        }
+        else {
+
+            const params = {
+                TableName: config.aws_table_name,
+                Key: {
+                    id: req.id
+                }
+            };
+            docClient.get(params, function (err, data) {
+                //console.log(err, 'err') 
+                //console.log(data, 'data')
+              if (err) {
+                  res.status(400).send({
+                      success: false,
+                      message: err
+                  }).end();
+              } else {
+                  res.status(200).send({
+                      success: true,
+                      message: 'get getCustomerById machine ',
+                      data
+                  }).end();
+              }
+          });
+        }
         //console.log(params, 'get getCustomerById machine ')
           // Call DynamoDB to delete the item to the table
-          docClient.get(params, function (err, data) {
-              //console.log(err, 'err') 
-              //console.log(data, 'data')
-            if (err) {
-                res.status(400).send({
-                    success: false,
-                    message: err
-                }).end();
-            } else {
-                res.status(200).send({
-                    success: true,
-                    message: 'get getCustomerById machine ',
-                    data
-                }).end();
-            }
-        });
+         
     }
     getCustomerByCellPhone = (req, res) => {
 
