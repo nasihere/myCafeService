@@ -2282,7 +2282,7 @@
         "affectsGlobalScope": false
       },
       "../src/services/customer.service.ts": {
-        "version": "301f84a6900fa7b8ff08682ded2fa575c47791f23608673bcf5bd8ffd84d89a8",
+        "version": "3e4fbfb404d4d7719744d2a51734931f59d462cc62a2b64ba8fce0de1416ac40",
         "signature": "495b3d9ff6432a61e7a0b29c3f9b8e3f43a3cd77782a481805910a4f94c5657c",
         "affectsGlobalScope": false
       },
@@ -2302,7 +2302,7 @@
         "affectsGlobalScope": false
       },
       "../src/services/session.service.ts": {
-        "version": "cbc407e8915f5fd51f4b05e58d9ba8f43c226851a08ac3631f515412e898c155",
+        "version": "3fd63cc1e17b3d4b1fe74ea59a6515789c2f6f7e7983e6eea430fe5fd500530e",
         "signature": "9bf71046f132703dda124706847e8e3c1c5057e4b1a726b9da810966e9a8e408",
         "affectsGlobalScope": false
       },

@@ -243,9 +243,9 @@ class DB_Customer {
                     ":searchText": Item.searchText.toString().toLowerCase(),
                     ":username": Item.username
                 },
-                Limit: Item.pageLimit || 30,
-                ScanIndexForward: false
+                Limit: Item.pageLimit || 1000
             };
+            console.log(params, 'params');
             docClient.scan(params, function (err, data) {
                 if (err) {
                     res.send({

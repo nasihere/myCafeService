@@ -518,7 +518,6 @@ class DB_Session {
                 ScanIndexForward: false,
                 ProjectionExpression: 'billDt, billPaid, billTotal, customerName, selfCheckIn, checkIn, checkout, agentid',
             };
-            console.log(params, 'billingSessions');
             docClient.scan(params, function (err, data) {
                 if (err) {
                     res.status(400).send({
@@ -560,7 +559,6 @@ class DB_Session {
                 },
                 ScanIndexForward: false
             };
-            console.log(params, 'billingSessions');
             docClient.scan(params, function (err, data) {
                 if (err) {
                     res.status(400).send({

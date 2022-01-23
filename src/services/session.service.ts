@@ -604,7 +604,7 @@ class DB_Session{
             ProjectionExpression: 'billDt, billPaid, billTotal, customerName, selfCheckIn, checkIn, checkout, agentid',
 
         };
-        console.log(params, 'billingSessions')
+        // console.log(params, 'billingSessions')
           // Call DynamoDB to delete the item to the table
         docClient.scan(params, function (err, data) {
                 if (err) {
@@ -651,7 +651,7 @@ class DB_Session{
             ScanIndexForward: false
 
         };
-        console.log(params, 'billingSessions')
+        // console.log(params, 'billingSessions')
           // Call DynamoDB to delete the item to the table
         docClient.scan(params, function (err, data) {
                 if (err) {
