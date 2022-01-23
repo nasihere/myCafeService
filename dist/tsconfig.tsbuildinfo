@@ -2282,13 +2282,13 @@
         "affectsGlobalScope": false
       },
       "../src/services/customer.service.ts": {
-        "version": "3e4fbfb404d4d7719744d2a51734931f59d462cc62a2b64ba8fce0de1416ac40",
-        "signature": "495b3d9ff6432a61e7a0b29c3f9b8e3f43a3cd77782a481805910a4f94c5657c",
+        "version": "7adfba6d42f2f0f984c1e5583e60018849b82af9d4b14600ba5401a3e89ab6e9",
+        "signature": "0d1cd1f2807856729d511e0f285f2589e7eba400dcb448fd6081d4ff890d6240",
         "affectsGlobalScope": false
       },
       "../src/controllers/customer.controller.ts": {
-        "version": "739ee683e2ea8e51860ba7b203ac1c18f2d7e58ff401bf172b58b88fc02e3c79",
-        "signature": "af64ad2b924434ff9564fade87e3452b3c50a2aa57558b04bebc0adcb3bb64e2",
+        "version": "b0cbb6ea95244d66d91f25dc6ee1d1dd5fc10857703a60f2d2cb2feb48b42fb2",
+        "signature": "2113de09368fce780c923b18aff855acd1ddec3fda7de1b477afa5f2da0ae5fa",
         "affectsGlobalScope": false
       },
       "../src/middleware/auth.middleware.ts": {

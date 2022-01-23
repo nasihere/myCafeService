@@ -38,6 +38,7 @@ class CustomerController {
         this.router.post('/findBySearchText', [], this.findBySearch)
         this.router.post('/findCustomerById', [], this.findCustomerById)
         this.router.post('/findBillingId', [], this.findBillingId)
+        this.router.post('/findCustomerIdByActivity', [], this.findCustomerIdByActivity)
         
       }
 
@@ -82,7 +83,14 @@ class CustomerController {
       new DB_Customer().getCustomerById(userAttr, res);
      
     }
-
+    findCustomerIdByActivity = (req: Request, res: Response) => {
+     
+      //console.log(req.body)
+      let userAttr =  { ...req.body }
+      
+      new DB_Customer().findCustomerIdByActivity(userAttr, res);
+     
+    }
     // findByCellPhone new customer
     findByCellPhone = (req: Request, res: Response) => {
       const result = validationResult(req);

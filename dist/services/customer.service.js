@@ -10,6 +10,7 @@ const config = {
     aws_table_name2: 'mycafe-customer-doc',
     aws_table_name3: 'mycafe-check-in-out',
     aws_table_name4: 'mycafe-billing',
+    aws_table_session: 'mycafe-session',
     aws_local_config: {},
     aws_remote_config: config_1.myAwsConfig
 };
@@ -231,6 +232,35 @@ class DB_Customer {
         this.checkin = (req, res) => {
         };
         this.checkout = (req, res) => {
+        };
+        this.findCustomerIdByActivity = (req, res) => {
+            aws_sdk_1.default.config.update(config.aws_remote_config);
+            const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
+            const Item = req;
+            var params = {
+                TableName: config.aws_table_name4,
+                FilterExpression: 'customerid = :customerid and username = :username',
+                ExpressionAttributeValues: {
+                    ":customerid": Item.customerId,
+                    ":username": Item.username
+                }
+            };
+            console.log(params, 'params');
+            docClient.scan(params, function (err, data) {
+                if (err) {
+                    res.send({
+                        success: false,
+                        message: err
+                    });
+                }
+                else {
+                    res.send({
+                        success: true,
+                        message: 'get Item',
+                        data
+                    });
+                }
+            });
         };
         this.getCustomerBySearchText = (req, res) => {
             aws_sdk_1.default.config.update(config.aws_remote_config);

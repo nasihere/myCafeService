@@ -65,6 +65,10 @@ class CustomerController {
             let userAttr = Object.assign({}, req.body);
             new customer_service_1.default().getCustomerById(userAttr, res);
         };
+        this.findCustomerIdByActivity = (req, res) => {
+            let userAttr = Object.assign({}, req.body);
+            new customer_service_1.default().findCustomerIdByActivity(userAttr, res);
+        };
         this.findByCellPhone = (req, res) => {
             const result = express_validator_1.validationResult(req);
             if (!result.isEmpty()) {
@@ -96,6 +100,7 @@ class CustomerController {
         this.router.post('/findBySearchText', [], this.findBySearch);
         this.router.post('/findCustomerById', [], this.findCustomerById);
         this.router.post('/findBillingId', [], this.findBillingId);
+        this.router.post('/findCustomerIdByActivity', [], this.findCustomerIdByActivity);
     }
     validateBody(type) {
         switch (type) {
