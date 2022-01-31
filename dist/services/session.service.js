@@ -206,7 +206,7 @@ class DB_Session {
                 Key: {
                     id: req.agentid
                 },
-                UpdateExpression: `set  pcstatus = :pcstatus, accessCode = :accessCode, timer = :timer, lastResponseAt = :lastResponseAt, accessAt = :accessAt, customerId = :customerId`,
+                UpdateExpression: `set  pcstatus = :pcstatus, accessCode = :accessCode, timer = :timer, lastResponseAt = :lastResponseAt, accessAt = :accessAt`,
                 ExpressionAttributeValues: {
                     ":pcstatus": req.pcstatus,
                     ":accessCode": null,

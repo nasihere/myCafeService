@@ -234,7 +234,7 @@ class DB_Session{
             Key: {
                 id: req.agentid
             },
-            UpdateExpression: `set  pcstatus = :pcstatus, accessCode = :accessCode, timer = :timer, lastResponseAt = :lastResponseAt, accessAt = :accessAt, customerId = :customerId`,
+            UpdateExpression: `set  pcstatus = :pcstatus, accessCode = :accessCode, timer = :timer, lastResponseAt = :lastResponseAt, accessAt = :accessAt`,
             ExpressionAttributeValues: {
                 ":pcstatus": req.pcstatus,
                 ":accessCode": null,
@@ -442,15 +442,17 @@ class DB_Session{
 
         const self = this;
 
-        //console.log(params, 'customer billing end')
+        // console.log(params, 'customer billing end')
           // Call DynamoDB to delete the item to the table
         docClient.update(params, function (err, data) {
                 if (err) {
+                    // console.log(err)
                     res.status(400).send({
                         success: false,
                         message: err
                     }).end();
                 } else {
+                    // console.log(Item)
                     req.billingId = Item.id;
                     req.agentid = Item.agentid;
                     self.updateBillingEnd(req, res);
