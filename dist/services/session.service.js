@@ -212,8 +212,7 @@ class DB_Session {
                     ":accessCode": null,
                     ":timer": null,
                     ":lastResponseAt": new Date().toISOString(),
-                    ":accessAt": null,
-                    ":customerId": null
+                    ":accessAt": null
                 },
             };
             docClient.update(params, function (err, data) {
